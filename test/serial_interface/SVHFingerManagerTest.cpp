@@ -48,6 +48,8 @@ int main(int argc, const char* argv[])
 
     std::cout << "connected" << std::endl;
 
+    finger_manager.setDefaultHomeSettings();
+
     finger_manager.resetChannel(test_channel);
 
     std::this_thread::sleep_for(std::chrono::seconds(2));

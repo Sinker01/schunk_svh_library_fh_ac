@@ -36,7 +36,9 @@ endif("${isSystemDir}" STREQUAL "-1")
 add_library(svh-library SHARED
         src/control/SVHController.cpp
         src/control/SVHFingerManager.cpp
-        )
+        src/control/FingerManagerWrapper.cpp
+        include/schunk_svh_library/FingerManagerWrapper.h
+)
 
 # Provide an alias target for our users' call to target_link_libraries()
 add_library(Schunk::svh-library ALIAS svh-library)
@@ -63,7 +65,8 @@ add_library(svh-serial SHARED
         src/serial/SVHReceiveThread.cpp
         src/serial/SVHSerialInterface.cpp
         src/serial/SVHSerialPacket.cpp
-        )
+        test/serial_interface/main.cpp
+)
 
 add_library(Schunk::svh-serial ALIAS svh-serial)
 
@@ -181,6 +184,20 @@ target_link_libraries(test_svh_finger_manager
         svh-library
         )
 add_test(NAME test_svh_finger_manager COMMAND test_svh_finger_manager)
+
+# --------------------------------------------------------------------------------
+
+add_executable(my_test
+        test/serial_interface/main.cpp
+)
+target_include_directories(my_test PUBLIC
+        ${PROJECT_SOURCE_DIR}/include
+)
+target_link_libraries(my_test
+        ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
+        svh-library
+)
+add_test(NAME my_test COMMAND my_test)
 
 # --------------------------------------------------------------------------------
 

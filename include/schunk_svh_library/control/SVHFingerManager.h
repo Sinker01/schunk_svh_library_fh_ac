@@ -353,13 +353,12 @@ private:
 
   //! \brief position conversion factor (ticks to RAD) for each channel
   std::vector<double> m_ticks2rad;
-
+public:
   //! \brief min position vector for each channel
   std::vector<int32_t> m_position_min;
-
   //! \brief max position vector for each channel
   std::vector<int32_t> m_position_max;
-
+private:
   //! \brief home position after complete reset of each channel
   std::vector<int32_t> m_position_home;
 
@@ -441,7 +440,7 @@ private:
   //! \return The tick value corresponing to the RAD input
   //!
   int32_t convertRad2Ticks(const SVHChannel& channel, const double& position);
-
+public:
   //!
   //! \brief Converts joint positions of a specific channel from ticks to RAD factoring in the
   //! offset of the channels \param channel Channel to Convert for (each one has different offset)
@@ -449,7 +448,7 @@ private:
   //! \return the RAD Value corresponding to the tick value of a given channel
   //!
   double convertTicks2Rad(const SVHChannel& channel, const int32_t& ticks);
-
+private:
   //!
   //! \brief Converts joint efforts of a specific channel from force [N] to current [mA] factoring
   //! the effort_constants of the channels \param channel Channel to Convert for (each one has
