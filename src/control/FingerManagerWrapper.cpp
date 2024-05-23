@@ -118,7 +118,7 @@ void setSpeed(int finger, double speed)
   g_m_svh.setPositionSettings(static_cast<driver_svh::SVHChannel>(finger), position_settings[finger]);
 }
 
-double getNewton(int finger)
+double get_mA(int finger)
 {
   double ret;
   if(!g_m_svh.getCurrent(castFinger(finger), ret)) return NAN;

@@ -16,7 +16,7 @@ void initFiveFingerManager();
 void setFinger(int finger, double position);
 void setSpeed(int finger, double speed);
 
-double getNewton(int finger);
+double get_mA(int finger);
 double getPosition(int finger);
 
 inline void apply() {}
