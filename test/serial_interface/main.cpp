@@ -21,7 +21,7 @@ using namespace std;
 
 inline void sleep()
 {
-  std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+  std::this_thread::sleep_for(std::chrono::milliseconds(500));
 }
 
 inline void mainPosition()
@@ -68,5 +68,6 @@ void testSpeed()
 
 int main()
 {
+  getData();
   return 0;
 }

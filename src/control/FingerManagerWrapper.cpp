@@ -8,7 +8,9 @@
 // Created by sven on 25.04.24.
 //
 
+#include "../../../../../../usr/include/math.h"
 #include "schunk_svh_library/control/SVHFingerManager.h"
+#include <fstream>
 #include <iostream>
 #include <schunk_svh_library/control/SVHController.h>
 #include <vector>
@@ -116,17 +118,46 @@ void setSpeed(int finger, double speed)
   g_m_svh.setPositionSettings(static_cast<driver_svh::SVHChannel>(finger), position_settings[finger]);
 }
 
-void test()
+double getNewton(int finger)
 {
-  for(int finger = 0; finger < CHANNELS; finger++)
+  double ret;
+  if(!g_m_svh.getCurrent(castFinger(finger), ret)) return NAN;
+  return ret;
+}
+double getPosition(int finger)
+{
+  double ret;
+  if(!g_m_svh.getPosition(castFinger(finger), ret)) return NAN;
+  return ret;
+}
+
+void readAndSleep(int& finger, fstream& file)
+{
+  double cur, pos;
+  for(int j = 0; j < 100; j++)
   {
-    cout << finger << endl;
-    for(int i = 0; i < 100; i++)
-    {
-      cout << finger << '\t' << i << '\t';
-      g_positions[finger] = i*0.01;
-      apply();
-    }
-    g_positions[finger] = 0;
+    auto zw = g_m_svh.requestControllerFeedback(castFinger(finger));
+    cout << j << ';' << zw << ';' << cur << ';' << pos << endl;
+    file << j << ';' << zw << ';' << cur << ';' << pos << endl;
+    std::this_thread::sleep_for(std::chrono::milliseconds(50));
+    g_m_svh.getCurrent(castFinger(finger), cur);
+    g_m_svh.getPosition(castFinger(finger), pos);
+  }
+}
+
+void getData()
+{
+  fstream opt;
+  opt.open("/home/sven/CLionProjects/svh_driver/out.csv");
+  int finger = 4;
+  initFiveFingerManager();
+  cout << "start";
+  setSpeed(finger, 0.4);
+  while(true)
+  {
+    setFinger(finger, 1);
+    readAndSleep(finger, opt);
+    setFinger(finger, 0);
+    readAndSleep(finger, opt);
   }
 }
