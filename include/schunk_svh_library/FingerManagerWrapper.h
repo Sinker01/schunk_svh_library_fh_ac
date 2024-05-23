@@ -15,6 +15,6 @@ void test();
 
 void setFinger(int finger, double position);
 void setSpeed(int finger, double speed);
-void apply();
+inline void apply() {}
 
 extern const double RANGES[9][2];
