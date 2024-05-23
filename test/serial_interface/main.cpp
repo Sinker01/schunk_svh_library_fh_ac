@@ -21,7 +21,7 @@ using namespace std;
 
 inline void sleep()
 {
-  std::this_thread::sleep_for(std::chrono::milliseconds(1500));
+  std::this_thread::sleep_for(std::chrono::milliseconds(5000));
 }
 
 inline void mainPosition()
@@ -34,26 +34,39 @@ inline void mainPosition()
   sleep();
 }
 
+void testAllFingerSpread()
+{
+  initFiveFingerManager();
+  for(int i = 0; i < CHANNELS; i++)
+  {
+    cout << i << endl;
+    setFinger(i, 1);
+    apply();
+    sleep();
+    setFinger(i, 0);
+    apply();
+    sleep();
+  }
+}
+
+void testSpeed()
+{
+  initFiveFingerManager();
+  cout << "start";
+  int finger = 4;
+  for(int i = 0; i < 10; i++)
+  {
+    setSpeed(finger, 1.-(i/10.));
+    setFinger(finger, 1);
+    apply();
+    sleep();
+    setFinger(finger, 0);
+    apply();
+    sleep();
+  }
+}
+
 int main()
 {
-  // initFiveFingerManager();
-  // setFinger(8, 0.3);
-  // for(int i = 0; i < 100; i++)
-  // {
-  //   cout << i << endl;
-  //   setFinger(5, i*0.01);
-  //   apply();
-  //   sleep();
-  //   mainPosition();
-  //   sleep();
-  // }
-  initFiveFingerManager();
-  mainPosition();
-  sleep();
-  for(int i = 0; i < CHANNELS; i++) setFinger(i, 0.);
-  apply();
-  sleep();
-  for(int i = 0; i < CHANNELS; i++) setFinger(i, 1.);
-  apply();
-  sleep();
+  return 0;
 }

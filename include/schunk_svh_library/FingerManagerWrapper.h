@@ -11,8 +11,10 @@
 #define CHANNELS 9
 
 void initFiveFingerManager();
+void test();
 
 void setFinger(int finger, double position);
+void setSpeed(int finger, double speed);
 void apply();
 
-extern double RANGES[9][2];
+extern const double RANGES[9][2];
