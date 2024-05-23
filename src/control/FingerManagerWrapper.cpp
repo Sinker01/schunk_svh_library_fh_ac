@@ -108,12 +108,16 @@ void initFiveFingerManager()
   g_m_svh.setAllTargetPositions(g_positions);
 }
 void setFinger(int finger, double position) {
+  if(position>1) position = 1;
+  else if(position<0) position = 0;
   g_positions[finger] = RANGES[finger][0] + ((RANGES[finger][1] - RANGES[finger][0]) * position);
   g_m_svh.setAllTargetPositions(g_positions);
 }
 
 void setSpeed(int finger, double speed)
 {
+  if(speed>1) speed = 1;
+  else if(speed<0) speed = 0;
   position_settings[finger].dt = 1e-3f * speed;
   g_m_svh.setPositionSettings(static_cast<driver_svh::SVHChannel>(finger), position_settings[finger]);
 }

@@ -11,15 +11,30 @@
 
 #define CHANNELS 9
 
+/**
+ * Initialises the five finger manager. This method should be called first.
+ */
 void initFiveFingerManager();
 
+/**
+ * An method to set the position of a finger.
+ * The code continues after calling thos method, so you program shpuld propably wait.
+ * @param finger The finger which should be accessed
+ * @param position The position between 0 and 1
+ */
 void setFinger(int finger, double position);
+/**
+ *  the speed to the finger
+ *   Set 1 for the maximun speed. Otherwise, the speed will be determined by multiplying the maximun
+ * speed with the given speed
+ * @param finger
+ * @param speed
+ */
 void setSpeed(int finger, double speed);
 
 double get_mA(int finger);
 double getPosition(int finger);
 
-inline void apply() {}
 void getData();
 
 extern const double RANGES[9][2];

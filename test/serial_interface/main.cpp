@@ -41,10 +41,8 @@ void testAllFingerSpread()
   {
     cout << i << endl;
     setFinger(i, 1);
-    apply();
     sleep();
     setFinger(i, 0);
-    apply();
     sleep();
   }
 }
@@ -58,10 +56,8 @@ void testSpeed()
   {
     setSpeed(finger, 1.-(i/10.));
     setFinger(finger, 1);
-    apply();
     sleep();
     setFinger(finger, 0);
-    apply();
     sleep();
   }
 }
