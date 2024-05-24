@@ -14,7 +14,6 @@
 #include <iostream>
 #include <schunk_svh_library/control/SVHController.h>
 #include <vector>
-#include <thread>
 
 /*
 0	thumb_flexion
@@ -114,17 +113,28 @@ void initFiveFingerManager()
   {
     throw "Could not initialize the Schunk SVH";
   }
-  for(int i = 0; i < CHANNELS; i++) g_positions[i] = RANGES[i][0];
+  for(int i = 0; i < CHANNELS; i++) g_positions[i] = MAX_RANGE_RAD[i];
   g_m_svh.setAllTargetPositions(g_positions);
 }
 
 
-
-double get_mA(int finger)
+inline auto castFinger(int finger)
 {
-  double ret;
-  if(!g_m_svh.getCurrent(castFinger(finger), ret)) return NAN;
+  return static_cast<driver_svh::SVHChannel>(finger);
+}
+
+int16_t getmA(int finger)
+{
+  int16_t ret;
+  if(!g_m_svh.getCurrent(castFinger(finger), ret)) return INT16_MAX;
   return ret;
+}
+
+double getNewton(int finger)
+{
+  auto mA = getmA(finger);
+  if(mA==INT16_MAX) return NAN;
+  return g_m_svh.convertmAtoN(castFinger(finger), mA);
 }
 
 double getPosition(int finger)
@@ -147,4 +157,14 @@ void setSpeed(int finger, double speed)
   else if(speed<0) speed = 0;
   position_settings[finger].dt = static_cast<float>(POSITION_SETTINGS[finger].dt * speed);
   g_m_svh.setPositionSettings(static_cast<driver_svh::SVHChannel>(finger), position_settings[finger]);
+}
+
+void setMaxNewton(int finger, double newton)
+{
+  int16_t mA = g_m_svh.convertNtomA(castFinger(finger), newton);
+  if(mA<0) mA = -mA;
+  if(mA > CURRENT_SETTINGS[finger].imx) mA = CURRENT_SETTINGS[finger].imx;
+  current_settings[finger].imn = -mA;
+  current_settings[finger].imx = mA;
+  g_m_svh.setCurrentSettings(castFinger(finger), current_settings[finger]);
 }

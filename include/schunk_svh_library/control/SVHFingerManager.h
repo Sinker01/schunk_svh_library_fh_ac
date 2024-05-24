@@ -448,13 +448,13 @@ public:
   //! \return the RAD Value corresponding to the tick value of a given channel
   //!
   double convertTicks2Rad(const SVHChannel& channel, const int32_t& ticks);
-private:
   //!
   //! \brief Converts joint efforts of a specific channel from force [N] to current [mA] factoring
   //! the effort_constants of the channels \param channel Channel to Convert for (each one has
   //! different constants) \param efforts Effort in [N] \return current The desired current in [mA]
   //!
   uint16_t convertNtomA(const SVHChannel& channel, const double& effort);
+private:
 
   //!
   //! \brief Check bounds of target positions

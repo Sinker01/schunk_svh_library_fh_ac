@@ -31,17 +31,8 @@ void setPositionTarget(int finger, double position);
  * @param speed
  */
 void setSpeed(int finger, double speed);
+void setMaxNewton(int finger, double newton);
 
-double get_mA(int finger);
+int16_t getmA(int finger);
 double getNewton(int finger);
 double getPosition(int finger);
-
-void getData();
-
-extern const double RANGES[9][2];
-
-inline auto castFinger(int finger)
-{
-  return static_cast<driver_svh::SVHChannel>(finger);
-}
-

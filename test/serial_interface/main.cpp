@@ -61,7 +61,7 @@ void sleepAndGetData(const int finger, ostream& outfile, const clock_t time)
   do
   {
     current_time = clock() - start_time;
-    outfile << to_string(clock()-start_time) + ";" + to_string(get_mA(finger)) + ";" + to_string(getPosition(finger)) + "\n";
+    outfile << to_string(current_time) + ";" + to_string(getmA(finger)) + ";" + to_string(getPosition(finger)) + "\n";
   } while (current_time <= time);
 }
 
@@ -85,6 +85,6 @@ void getData(const unsigned count)
 
 int main()
 {
-  getData();
+  getData(2);
   return 0;
 }
