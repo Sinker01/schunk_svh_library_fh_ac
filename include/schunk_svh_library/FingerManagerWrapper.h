@@ -22,7 +22,7 @@ void initFiveFingerManager();
  * @param finger The finger which should be accessed
  * @param position The position between 0 and 1
  */
-void setFinger(int finger, double position);
+void setPositionTarget(int finger, double position);
 /**
  *  the speed to the finger
  *   Set 1 for the maximun speed. Otherwise, the speed will be determined by multiplying the maximun
@@ -33,6 +33,7 @@ void setFinger(int finger, double position);
 void setSpeed(int finger, double speed);
 
 double get_mA(int finger);
+double getNewton(int finger);
 double getPosition(int finger);
 
 void getData();
