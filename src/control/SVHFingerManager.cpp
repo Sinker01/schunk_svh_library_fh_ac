@@ -751,7 +751,7 @@ bool SVHFingerManager::getPosition(const SVHChannel& channel, double& position)
 }
 
 // returns actual current value for given channel
-bool SVHFingerManager::getCurrent(const SVHChannel& channel, double& current)
+bool SVHFingerManager::getCurrent(const SVHChannel& channel, int16_t& current)
 {
   SVHControllerFeedback controller_feedback;
   if ((channel >= 0 && channel < SVH_DIMENSION) && isHomed(channel) &&

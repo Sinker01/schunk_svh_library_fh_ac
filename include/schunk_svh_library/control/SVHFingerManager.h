@@ -157,7 +157,7 @@ public:
   //! \param current current of the given channel in [mA]
   //! \return bool true if a valid result was requested (i.e. an existing channel)
   //!
-  bool getCurrent(const SVHChannel& channel, double& current);
+  bool getCurrent(const SVHChannel& channel, int16_t& current);
 
 
   //!
