@@ -144,27 +144,49 @@ double getPosition(int finger)
 return (HOME_SETTINGS[finger].range_rad - MAX_RANGE_RAD[finger]) * pos - MAX_RANGE_RAD[finger];
 }
 
-void setPositionTarget(int finger, double position) {
-  if(position>1) position = 1;
-  else if(position<0) position = 0;
+char setPositionTarget(int finger, double position) {
+  char ret = 0;
+  if(position>1)
+  {
+    position = 1;
+    ret = 1;
+  }
+  else if(position<0)
+  {
+    position = 0;
+    ret = -1;
+  }
   g_positions[finger] = MAX_RANGE_RAD[finger] + ((HOME_SETTINGS[finger].range_rad - MAX_RANGE_RAD[finger]) * position);
   g_m_svh.setAllTargetPositions(g_positions);
+  return ret;
 }
 
-void setSpeed(int finger, double speed)
+char setSpeed(int finger, double speed)
 {
-  if(speed>1) speed = 1;
-  else if(speed<0) speed = 0;
+  char ret = 0;
+  if(speed>1)
+  {
+    speed = 1;
+    ret = 1;
+  }
+  else if(speed<0)
+  {
+    speed = 0;
+    ret = -1;
+  }
   position_settings[finger].dt = static_cast<float>(POSITION_SETTINGS[finger].dt * speed);
   g_m_svh.setPositionSettings(static_cast<driver_svh::SVHChannel>(finger), position_settings[finger]);
+  return ret;
 }
 
-void setMaxNewton(int finger, double newton)
+char setMaxNewton(int finger, double newton)
 {
   int16_t mA = g_m_svh.convertNtomA(castFinger(finger), newton);
   if(mA<0) mA = -mA;
-  if(mA > CURRENT_SETTINGS[finger].imx) mA = CURRENT_SETTINGS[finger].imx;
+  char ret = mA > CURRENT_SETTINGS[finger].imx;
+  if(ret) mA = CURRENT_SETTINGS[finger].imx;
   current_settings[finger].imn = -mA;
   current_settings[finger].imx = mA;
   g_m_svh.setCurrentSettings(castFinger(finger), current_settings[finger]);
+  return ret;
 }
