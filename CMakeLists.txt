@@ -5,6 +5,8 @@ project(schunk_svh_library VERSION 1.0 DESCRIPTION "C++ driver library for the S
 # CMake will automatically update this library's version in the
 # SVHVersionConfig.h include.
 configure_file(include/schunk_svh_library/VersionConfig.h.in SVHVersionConfig.h)
+include_directories(/usr/lib/jvm/java-11-openjdk-amd64/include)
+include_directories(/usr/lib/jvm/java-11-openjdk-amd64/include/linux)
 
 # We require this C++ standard
 set(CMAKE_CXX_STANDARD 14)
@@ -37,7 +39,7 @@ add_library(svh-library SHARED
         src/control/SVHController.cpp
         src/control/SVHFingerManager.cpp
         src/control/FingerManagerWrapper.cpp
-        include/schunk_svh_library/FingerManagerWrapper.h
+        src/control/Finger.cpp
 )
 
 # Provide an alias target for our users' call to target_link_libraries()
