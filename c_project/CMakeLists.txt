@@ -103,7 +103,7 @@ add_executable(test_driver_svh
         test/driver_svh/SVHDriverTest.cpp
         )
 target_include_directories(test_driver_svh PUBLIC
-        ${PROJECT_SOURCE_DIR}/include
+        include
         )
 target_link_libraries(test_driver_svh
         ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
@@ -122,7 +122,7 @@ add_executable(test_svh_send_packet
         test/serial_interface/SVHSendPacketTest.cpp
         )
 target_include_directories(test_svh_send_packet PUBLIC
-        ${PROJECT_SOURCE_DIR}/include
+        include
         )
 target_link_libraries(test_svh_send_packet
         ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
@@ -151,7 +151,7 @@ add_executable(test_svh_send_feedback_packet
         test/serial_interface/SVHSendFeedbackPacketTest.cpp
         )
 target_include_directories(test_svh_send_feedback_packet PUBLIC
-        ${PROJECT_SOURCE_DIR}/include
+        include
         )
 target_link_libraries(test_svh_send_feedback_packet
         ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
@@ -165,7 +165,7 @@ add_executable(test_svh_controller_init_send
         test/serial_interface/SVHControllerInitSendTest.cpp
         )
 target_include_directories(test_svh_controller_init_send PUBLIC
-        ${PROJECT_SOURCE_DIR}/include
+        include
         )
 target_link_libraries(test_svh_controller_init_send
         ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
@@ -179,7 +179,7 @@ add_executable(test_svh_finger_manager
         test/serial_interface/SVHFingerManagerTest.cpp
         )
 target_include_directories(test_svh_finger_manager PUBLIC
-        ${PROJECT_SOURCE_DIR}/include
+        include
         )
 target_link_libraries(test_svh_finger_manager
         ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
@@ -193,7 +193,7 @@ add_executable(my_test
         test/serial_interface/main.cpp
 )
 target_include_directories(my_test PUBLIC
-        ${PROJECT_SOURCE_DIR}/include
+        include
 )
 target_link_libraries(my_test
         ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
