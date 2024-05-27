@@ -41,8 +41,7 @@ public enum Finger {
     }
 
     static {
-        System.load("/home/sven/CLionProjects/svh_driver/c_project/cmake-build-debug/libsvh-library.so");
-        System.load("/home/sven/CLionProjects/svh_driver/c_project/cmake-build-debug/libsvh-serial.so");
+        System.loadLibrary("svh_java");
         initFiveFingerManager();
     }
 

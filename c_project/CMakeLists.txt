@@ -29,7 +29,7 @@ set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 # The RPATH to use when installing, but only if it's not a system directory
 list(FIND CMAKE_PLATFORM_IMPLICIT_LINK_DIRECTORIES "${CMAKE_INSTALL_PREFIX}/lib" isSystemDir)
 if("${isSystemDir}" STREQUAL "-1")
-    set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
+        set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
 endif("${isSystemDir}" STREQUAL "-1")
 
 # --------------------------------------------------------------------------------
@@ -49,11 +49,11 @@ target_include_directories(svh-library PUBLIC
         $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
         $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:include>
-        )
+)
 
 target_link_libraries(svh-library PUBLIC
         svh-serial
-        )
+)
 
 
 # --------------------------------------------------------------------------------
@@ -75,23 +75,51 @@ add_library(Schunk::svh-serial ALIAS svh-serial)
 target_include_directories(svh-serial PUBLIC
         $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:include>
-        )
+)
 
 target_link_libraries(svh-serial PUBLIC
-        )
+)
 target_compile_definitions(svh-serial PUBLIC
         -D_SYSTEM_LINUX_
         -D_SYSTEM_POSIX_
-        )
+)
 if(THREADS_HAVE_PTHREAD_ARG)
-  target_compile_options(svh-serial PUBLIC "-pthread")
+        target_compile_options(svh-serial PUBLIC "-pthread")
 endif()
 if(CMAKE_THREAD_LIBS_INIT)
-  target_link_libraries(svh-serial PUBLIC "${CMAKE_THREAD_LIBS_INIT}")
+        target_link_libraries(svh-serial PUBLIC "${CMAKE_THREAD_LIBS_INIT}")
 endif()
 
 
 # --------------------------------------------------------------------------------
+
+
+# --------------------------------------------------------------------------------
+# JNI library
+# --------------------------------------------------------------------------------
+add_library(svh_java SHARED
+        src/control/Finger.cpp
+)
+
+target_include_directories(svh_java PUBLIC
+        /usr/lib/jvm/java-11-openjdk-amd64/include
+        /usr/lib/jvm/java-11-openjdk-amd64/include/linux
+        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>
+)
+
+set_target_properties(svh_java PROPERTIES OUTPUT_NAME "svh_java")
+
+target_link_libraries(svh_java PUBLIC
+        svh-library
+)
+
+install(TARGETS svh_java
+        LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
+        RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
+        INCLUDES DESTINATION include
+)
 
 
 # --------------------------------------------------------------------------------
@@ -101,33 +129,33 @@ add_executable(test_driver_svh
         test/driver_svh/MainTest.cpp
         test/driver_svh/ByteOrderConversionTest.cpp
         test/driver_svh/SVHDriverTest.cpp
-        )
+)
 target_include_directories(test_driver_svh PUBLIC
         include
-        )
+)
 target_link_libraries(test_driver_svh
         ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
         svh-library
-        )
+)
 target_compile_definitions(test_driver_svh PUBLIC
         -D_SYSTEM_LINUX_
         -D_SYSTEM_POSIX_
         -DBOOST_TEST_DYN_LINK
-        )
+)
 add_test(NAME test_driver_svh COMMAND test_driver_svh)
 
 # --------------------------------------------------------------------------------
 
 add_executable(test_svh_send_packet
         test/serial_interface/SVHSendPacketTest.cpp
-        )
+)
 target_include_directories(test_svh_send_packet PUBLIC
         include
-        )
+)
 target_link_libraries(test_svh_send_packet
         ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
         svh-serial
-        )
+)
 add_test(NAME test_svh_send_packet COMMAND test_svh_send_packet)
 
 # --------------------------------------------------------------------------------
@@ -149,42 +177,42 @@ add_test(NAME test_svh_send_packet COMMAND test_svh_send_packet)
 
 add_executable(test_svh_send_feedback_packet
         test/serial_interface/SVHSendFeedbackPacketTest.cpp
-        )
+)
 target_include_directories(test_svh_send_feedback_packet PUBLIC
         include
-        )
+)
 target_link_libraries(test_svh_send_feedback_packet
         ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
         svh-serial
-        )
+)
 add_test(NAME test_svh_send_feedback_packet COMMAND test_svh_send_feedback_packet)
 
 # --------------------------------------------------------------------------------
 
 add_executable(test_svh_controller_init_send
         test/serial_interface/SVHControllerInitSendTest.cpp
-        )
+)
 target_include_directories(test_svh_controller_init_send PUBLIC
         include
-        )
+)
 target_link_libraries(test_svh_controller_init_send
         ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
         svh-library
-        )
+)
 add_test(NAME test_svh_controller_init_send COMMAND test_svh_controller_init_send)
 
 # --------------------------------------------------------------------------------
 
 add_executable(test_svh_finger_manager
         test/serial_interface/SVHFingerManagerTest.cpp
-        )
+)
 target_include_directories(test_svh_finger_manager PUBLIC
         include
-        )
+)
 target_link_libraries(test_svh_finger_manager
         ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
         svh-library
-        )
+)
 add_test(NAME test_svh_finger_manager COMMAND test_svh_finger_manager)
 
 # --------------------------------------------------------------------------------
@@ -211,29 +239,30 @@ enable_testing()
 install(TARGETS
         svh-library
         svh-serial
+        svh_java
         EXPORT schunk_svh_library_targets
         LIBRARY DESTINATION lib
         ARCHIVE DESTINATION lib
         RUNTIME DESTINATION bin
         INCLUDES DESTINATION include
-        )
+)
 
 # Create and install a file with all exported targets
 install(EXPORT schunk_svh_library_targets
         DESTINATION lib/cmake/schunk_svh_library
         FILE schunk_svh_libraryTargets.cmake
         NAMESPACE Schunk::
-        )
+)
 
 # Install the Config file so that find_package() works with this package
 install(FILES schunk_svh_libraryConfig.cmake
         DESTINATION lib/cmake/schunk_svh_library
-        )
+)
 
 # Install the include directories
 install(DIRECTORY include/schunk_svh_library
-  DESTINATION include
-  FILES_MATCHING PATTERN "*.h")
+        DESTINATION include
+        FILES_MATCHING PATTERN "*.h")
 
 #### Begin import ####
 # Imported from ros-industrial/ros_industrial_cmake_boilerplate
