@@ -67,7 +67,6 @@ add_library(svh-serial SHARED
         src/serial/SVHReceiveThread.cpp
         src/serial/SVHSerialInterface.cpp
         src/serial/SVHSerialPacket.cpp
-        test/serial_interface/main.cpp
 )
 
 add_library(Schunk::svh-serial ALIAS svh-serial)

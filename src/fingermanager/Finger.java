@@ -1,3 +1,7 @@
+package fingermanager;
+
+import java.lang.reflect.Field;
+
 public enum Finger {
 
     THUMB_FLEXION(0),
@@ -41,8 +45,8 @@ public enum Finger {
     }
 
     static {
-        System.loadLibrary("svh_java");
-        initFiveFingerManager();
+        System.load("/usr/local/lib/libsvh_java.so");
+
     }
 
     private static native void initFiveFingerManager();
