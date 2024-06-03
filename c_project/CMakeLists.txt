@@ -39,7 +39,6 @@ add_library(svh-library SHARED
         src/control/SVHController.cpp
         src/control/SVHFingerManager.cpp
         src/control/FingerManagerWrapper.cpp
-        src/control/Finger.cpp
 )
 
 # Provide an alias target for our users' call to target_link_libraries()
@@ -101,8 +100,8 @@ add_library(svh_java SHARED
 )
 
 target_include_directories(svh_java PUBLIC
-        /usr/lib/jvm/java-11-openjdk-amd64/include
-        /usr/lib/jvm/java-11-openjdk-amd64/include/linux
+        /usr/lib/jvm/java-21-openjdk-amd64/include
+        /usr/lib/jvm/java-21-openjdk-amd64/include/linux
         $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:include>
 )
