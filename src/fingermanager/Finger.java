@@ -1,6 +1,6 @@
 package fingermanager;
 
-import java.lang.reflect.Field;
+import java.io.File;
 
 public enum Finger {
 
@@ -45,17 +45,19 @@ public enum Finger {
     }
 
     static {
-        System.load("/usr/local/lib/libsvh_java.so");
-
+        File lib = new File("c_project/cmake-build-debug/" + System.mapLibraryName("svh_java")); //Pfad in den cmake_build_debug Ordner, wo nach dem kompilieren die .so Dateien liegen
+        System.out.println("FINGER LIB PATH: " + lib.getAbsolutePath());
+        System.load(lib.getAbsolutePath());
+        initFiveFingerManager();
     }
 
     private static native void initFiveFingerManager();
 
-    private static native char setPositionTarget(int finger, double position);
+    private static native byte setPositionTarget(int finger, double position);
 
-    private static native char setSpeed(int finger, double speed);
+    private static native byte setSpeed(int finger, double speed);
 
-    private static native char setMaxNewton(int finger, double newton);
+    private static native byte setMaxNewton(int finger, double newton);
 
     private static native short getmA(int finger);
 

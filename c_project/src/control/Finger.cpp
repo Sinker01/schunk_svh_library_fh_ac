@@ -9,15 +9,15 @@ JNIEXPORT void JNICALL Java_fingermanager_Finger_initFiveFingerManager(JNIEnv *e
   initFiveFingerManager();
 }
 
-JNIEXPORT jchar JNICALL Java_fingermanager_Finger_setPositionTarget(JNIEnv *env, jobject obj, jint finger, jdouble position) {
+JNIEXPORT jbyte JNICALL Java_fingermanager_Finger_setPositionTarget(JNIEnv *env, jobject obj, jint finger, jdouble position) {
   return setPositionTarget(finger, position);
 }
 
-JNIEXPORT jchar JNICALL Java_fingermanager_Finger_setSpeed(JNIEnv *env, jobject obj, jint finger, jdouble speed) {
+JNIEXPORT jbyte JNICALL Java_fingermanager_Finger_setSpeed(JNIEnv *env, jobject obj, jint finger, jdouble speed) {
   return setSpeed(finger, speed);
 }
 
-JNIEXPORT jchar JNICALL Java_fingermanager_Finger_setMaxNewton(JNIEnv *env, jobject obj, jint finger, jdouble newton) {
+JNIEXPORT jbyte JNICALL Java_fingermanager_Finger_setMaxNewton(JNIEnv *env, jobject obj, jint finger, jdouble newton) {
   return setMaxNewton(finger, newton);
 }
 

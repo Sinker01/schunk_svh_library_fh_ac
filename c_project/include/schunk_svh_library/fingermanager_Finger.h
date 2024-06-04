@@ -18,25 +18,25 @@ JNIEXPORT void JNICALL Java_fingermanager_Finger_initFiveFingerManager
 /*
  * Class:     fingermanager_Finger
  * Method:    setPositionTarget
- * Signature: (ID)C
+ * Signature: (ID)B
  */
-JNIEXPORT jchar JNICALL Java_fingermanager_Finger_setPositionTarget
+JNIEXPORT jbyte JNICALL Java_fingermanager_Finger_setPositionTarget
   (JNIEnv *, jclass, jint, jdouble);
 
 /*
  * Class:     fingermanager_Finger
  * Method:    setSpeed
- * Signature: (ID)C
+ * Signature: (ID)B
  */
-JNIEXPORT jchar JNICALL Java_fingermanager_Finger_setSpeed
+JNIEXPORT jbyte JNICALL Java_fingermanager_Finger_setSpeed
   (JNIEnv *, jclass, jint, jdouble);
 
 /*
  * Class:     fingermanager_Finger
  * Method:    setMaxNewton
- * Signature: (ID)C
+ * Signature: (ID)B
  */
-JNIEXPORT jchar JNICALL Java_fingermanager_Finger_setMaxNewton
+JNIEXPORT jbyte JNICALL Java_fingermanager_Finger_setMaxNewton
   (JNIEnv *, jclass, jint, jdouble);
 
 /*
