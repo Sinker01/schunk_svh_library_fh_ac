@@ -11,6 +11,8 @@
 
 using namespace std;
 
+constexpr clock_t ONE_SEC = 1000000;
+
 void sleep(std::chrono::milliseconds time = 2000ms)
 {
   this_thread::sleep_for(time);
@@ -61,7 +63,11 @@ void sleepAndGetData(const int finger, ostream& outfile, const clock_t time)
   do
   {
     current_time = clock() - start_time;
-    outfile << to_string(current_time) + ";" + to_string(getmA(finger)) + ";" + to_string(getPosition(finger)) + "\n";
+    outfile << to_string(current_time) + ";"
+                 + to_string(getmA(finger))
+                 + ";" + to_string(getNewton(finger))
+                 + ";" + to_string(getPosition(finger))
+                 + "\n";
   } while (current_time <= time);
 }
 
@@ -72,10 +78,9 @@ void getData(const unsigned count)
   cout << "start";
   setSpeed(finger, 0.2);
   ofstream outfile{"outof" + to_string(finger)};
-  outfile << "time[µs];mA;position" << endl;
+  outfile << "time[µs];mA;Newton;position" << endl;
   for(unsigned i = 0; i < count; i++)
   {
-    constexpr clock_t ONE_SEC = 1000000;
     setPositionTarget(finger, 1);
     sleepAndGetData(finger, outfile, ONE_SEC);
     setPositionTarget(finger, 0);
@@ -83,8 +88,25 @@ void getData(const unsigned count)
   }
 }
 
+void testNewton() {
+  int finger = 3;
+  initFiveFingerManager();
+  cout << "start\n\n";
+  setPositionTarget(finger, 0);
+  sleep(1000ms);
+
+  cout << "time[µs];mA;Newton;position" << endl;
+  for(int i = 0; i < 10; i++) {
+    setMaxNewton(finger, (10-i) * 0.5);
+    setPositionTarget(finger, 1);
+    sleepAndGetData(3, cout, ONE_SEC);
+    setPositionTarget(finger, 0);
+    sleepAndGetData(3, cout, ONE_SEC);
+  }
+}
+
 int main()
 {
-  getData(2);
+  testNewton();
   return 0;
 }
