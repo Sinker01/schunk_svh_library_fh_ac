@@ -56,18 +56,21 @@ void mainPosition()
   sleep(1000ms);
 }
 
-void sleepAndGetData(const int finger, ostream& outfile, const clock_t time)
+void sleepAndGetData(const int finger, ostream& outfile, const size_t time)
 {
   clock_t start_time = clock();
-  clock_t current_time;
+  size_t current_time = 0;
   do
   {
+    std::this_thread::sleep_for(100ms);
+    current_time += 100;
     current_time = clock() - start_time;
     outfile << to_string(current_time) + ";"
                  + to_string(getmA(finger))
                  + ";" + to_string(getNewton(finger))
                  + ";" + to_string(getPosition(finger))
                  + "\n";
+    //std::this_thread::sleep_for(100ms);
   } while (current_time <= time);
 }
 
@@ -89,24 +92,54 @@ void getData(const unsigned count)
 }
 
 void testNewton() {
-  int finger = 3;
+  int finger = 6;
   initFiveFingerManager();
-  cout << "start\n\n";
+  //ofstream file("out.csv");
+  auto &file = cout;
+  file << "start\n\n";
   setPositionTarget(finger, 0);
-  sleep(1000ms);
+  sleep(3000ms);
 
   cout << "time[µs];mA;Newton;position" << endl;
   for(int i = 0; i < 10; i++) {
-    setMaxNewton(finger, (10-i) * 0.5);
+    setMaxNewton(finger, -10);
     setPositionTarget(finger, 1);
-    sleepAndGetData(3, cout, ONE_SEC);
+    sleepAndGetData(3, file, ONE_SEC * 2);
     setPositionTarget(finger, 0);
-    sleepAndGetData(3, cout, ONE_SEC);
+    sleepAndGetData(3, file, ONE_SEC);
   }
+}
+
+void testmA() {
+  int finger = 6;
+  initFiveFingerManager();
+  //ofstream file("out.csv");
+  auto &file = cout;
+  file << "start\n\n";
+  setPositionTarget(finger, 0);
+  sleep(3000ms);
+
+  cout << "time[µs];mA;Newton;position" << endl;
+  for(int i = 0; i < 10; i++) {
+    setMaxmA(finger, (10-i)/10. * 1e6);
+    setPositionTarget(finger, 1);
+    sleepAndGetData(3, file, 3000);
+    setPositionTarget(finger, 0);
+    sleepAndGetData(3, file, 2000);
+  }
+}
+
+void testOpencsv()
+{
+  ofstream file;
+  file.open("out.csv");
+  file << "test";
 }
 
 int main()
 {
-  testNewton();
+  testmA();
+  sleep(5000ms);
+  //testmA();
   return 0;
 }

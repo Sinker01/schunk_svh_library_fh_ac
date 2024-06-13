@@ -179,14 +179,19 @@ char setSpeed(int finger, double speed)
   return ret;
 }
 
+char setMaxmA(int finger, uint16_t mA)
+{
+  if(mA<0) mA = -mA;
+  //char ret = mA > POSITION_SETTINGS[finger].wmx;
+  //if(ret) mA = POSITION_SETTINGS[finger].wmx;
+  position_settings[finger].wmn = -mA;
+  position_settings[finger].wmx = mA;
+  g_m_svh.setPositionSettings(castFinger(finger), position_settings[finger]);
+  return true;
+}
+
 char setMaxNewton(int finger, double newton)
 {
-  int16_t mA = g_m_svh.convertNtomA(castFinger(finger), newton);
-  if(mA<0) mA = -mA;
-  char ret = mA > CURRENT_SETTINGS[finger].imx;
-  if(ret) mA = CURRENT_SETTINGS[finger].imx;
-  current_settings[finger].imn = -mA;
-  current_settings[finger].imx = mA;
-  g_m_svh.setCurrentSettings(castFinger(finger), current_settings[finger]);
-  return ret;
+  uint16_t mA = g_m_svh.convertNtomA(castFinger(finger), newton);
+  return setMaxmA(finger, mA);
 }

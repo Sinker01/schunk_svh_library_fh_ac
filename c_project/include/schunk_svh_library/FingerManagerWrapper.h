@@ -32,6 +32,7 @@ char setPositionTarget(int finger, double position);
  */
 char setSpeed(int finger, double speed);
 char setMaxNewton(int finger, double newton);
+char setMaxmA(int finger, uint16_t mA);
 
 int16_t getmA(int finger);
 double getNewton(int finger);
