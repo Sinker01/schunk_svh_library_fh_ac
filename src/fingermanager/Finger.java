@@ -33,7 +33,7 @@ public enum Finger {
     }
 
     public short getmA() {
-        return getmA(index);
+        return getmA(0); // Example usage
     }
 
     public double getNewton() {
@@ -44,14 +44,24 @@ public enum Finger {
         return getPosition(index);
     }
 
+
+
+   // public static void initFingerManager(){initFiveFingerManager();}
+
+//    static {
+//        File lib = new File("c_project/cmake-build-debug/" + System.mapLibraryName("svh_java")); //Pfad in den cmake_build_debug Ordner, wo nach dem kompilieren die .so Dateien liegen
+//        System.out.println("FINGER LIB PATH: " + lib.getAbsolutePath());
+//        System.load(lib.getAbsolutePath());
+//        initFiveFingerManager();
+//    }
+
     static {
-        File lib = new File("c_project/cmake-build-debug/" + System.mapLibraryName("svh_java")); //Pfad in den cmake_build_debug Ordner, wo nach dem kompilieren die .so Dateien liegen
-        System.out.println("FINGER LIB PATH: " + lib.getAbsolutePath());
-        System.load(lib.getAbsolutePath());
-        initFiveFingerManager();
+        System.loadLibrary("svh_java");
+        System.out.println("svh_java library loaded.");
+        //initFiveFingerManager();
     }
 
-    private static native void initFiveFingerManager();
+    public static native void initFiveFingerManager();
 
     private static native byte setPositionTarget(int finger, double position);
 
