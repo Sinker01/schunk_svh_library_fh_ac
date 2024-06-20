@@ -72,20 +72,20 @@ void sleepAndGetData(const int finger, ostream& outfile, const std::chrono::mill
   } while (current_time <= time);
 }
 
-void sleepAndGetData_frequent(const int finger, ostream& outfile, const std::chrono::milliseconds time, std::chrono::milliseconds fr, unsigned &count)
+void sleepAndGetData_frequent(const int finger, ostream& file, const std::chrono::milliseconds time, std::chrono::milliseconds fr, unsigned &count)
 {
-  auto start_time = std::chrono::system_clock::now();
-  for(int i = 0; i < time/fr; i++) {
+  double cur, pos, newton;
+  for(int j = 0; j < 100; j++)
+  {
     count++;
-    this_thread::sleep_for(fr);
-    auto current_time = std::chrono::system_clock::now() - start_time;
-    auto current_time_ms = std::chrono::duration_cast<std::chrono::milliseconds>(current_time * count).count();
-    outfile << count + ";"
-                 + to_string(getmA(finger))
-                 + ";" + to_string(getNewton(finger))
-                 + ";" + to_string(getPosition(finger))
-                 + "\n";
+    cout << count << ';' << cur << ';'<< newton << ";" << pos << endl;
+    file << count << ';' << cur << ';'<< newton << ";" << pos << endl;
+    std::this_thread::sleep_for(std::chrono::milliseconds(50));
+    cur = getmA(finger);
+    pos = getPosition(finger);
+    newton = getNewton(finger);
   }
+
 }
 
 void testNewton() {
@@ -119,7 +119,7 @@ void testmA() {
   cout << "time[µs];mA;Newton;position" << endl;
   unsigned count = 0;
   for(int i = 0; i < 10; i++) {
-    setMaxmA(finger, (10-i)/10. * 1e6);
+    //setMaxmA(finger, (10-i)/10. * 1e6);
     setPositionTarget(finger, 1);
     sleepAndGetData_frequent(3, file, 300ms, 1ms, count);
     setPositionTarget(finger, 0);

@@ -132,6 +132,7 @@ int16_t getmA(int finger)
 
 double getNewton(int finger)
 {
+  g_m_svh.requestControllerFeedback(castFinger(finger));
   auto mA = getmA(finger);
   if(mA==INT16_MAX) return NAN;
   return g_m_svh.convertmAtoN(castFinger(finger), mA);
@@ -141,6 +142,7 @@ double getPosition(int finger)
 {
   double pos;
   if(!g_m_svh.getPosition(castFinger(finger), pos)) return NAN;
+  return pos;
 return (HOME_SETTINGS[finger].range_rad - MAX_RANGE_RAD[finger]) * pos - MAX_RANGE_RAD[finger];
 }
 
