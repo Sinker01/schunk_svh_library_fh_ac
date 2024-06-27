@@ -56,36 +56,34 @@ void mainPosition()
   sleep(1000ms);
 }
 
-void sleepAndGetData(const int finger, ostream& outfile, const std::chrono::milliseconds time)
+
+
+void sleepAndGetData(const int finger, ostream& outfile, const size_t time)
 {
-  auto start_time = std::chrono::system_clock::now();
-  std::chrono::nanoseconds current_time;
-  do
-  {
-    current_time = std::chrono::system_clock::now() - start_time;
-    auto current_time_ms = std::chrono::duration_cast<std::chrono::milliseconds>(current_time).count();
-    outfile << to_string(current_time_ms) + ";"
-                 + to_string(getmA(finger))
-                 + ";" + to_string(getNewton(finger))
-                 + ";" + to_string(getPosition(finger))
-                 + "\n";
-  } while (current_time <= time);
+  auto current_time = 0;
+  for(int i = 0; i < 3000; i++) {
+    this_thread::sleep_for(10ms);
+    outfile << to_string(current_time) + ";" + to_string(getmA(finger)) + ";" + to_string(getPosition(finger)) + "\n";
+  }
 }
 
-void sleepAndGetData_frequent(const int finger, ostream& file, const std::chrono::milliseconds time, std::chrono::milliseconds fr, unsigned &count)
+void getData(const unsigned count)
 {
-  double cur, pos, newton;
-  for(int j = 0; j < 100; j++)
+  int finger = 3;
+  initFiveFingerManager();
+  cout << "start";
+  setSpeed(finger, 0.2);
+  //ofstream outfile{"outof" + to_string(finger)};
+  auto &outfile = cout;
+  outfile << "time[µs];mA;position" << endl;
+  for(unsigned i = 0; i < count; i++)
   {
-    count++;
-    cout << count << ';' << cur << ';'<< newton << ";" << pos << endl;
-    file << count << ';' << cur << ';'<< newton << ";" << pos << endl;
-    std::this_thread::sleep_for(std::chrono::milliseconds(50));
-    cur = getmA(finger);
-    pos = getPosition(finger);
-    newton = getNewton(finger);
+    constexpr clock_t ONE_SEC = 1000000;
+    setPositionTarget(finger, 1);
+    sleepAndGetData(finger, outfile, ONE_SEC);
+    setPositionTarget(finger, 0);
+    sleepAndGetData(finger, outfile, ONE_SEC);
   }
-
 }
 
 void testNewton() {
@@ -132,5 +130,11 @@ int main()
   testmA();
   //sleep(5000ms);
   //testmA();
+  return 0;
+}
+
+int main()
+{
+  getData(2);
   return 0;
 }
