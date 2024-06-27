@@ -184,12 +184,12 @@ char setSpeed(int finger, double speed)
 char setMaxmA(int finger, uint16_t mA)
 {
   if(mA<0) mA = -mA;
-  //char ret = mA > POSITION_SETTINGS[finger].wmx;
-  //if(ret) mA = POSITION_SETTINGS[finger].wmx;
+  char ret = mA > POSITION_SETTINGS[finger].wmx;
+  if(ret) mA = POSITION_SETTINGS[finger].wmx;
   current_settings[finger].wmn = -mA;
   current_settings[finger].wmx = mA;
   g_m_svh.setCurrentSettings(castFinger(finger), current_settings[finger]);
-  return true;
+  return ret;
 }
 
 char setMaxNewton(int finger, double newton)

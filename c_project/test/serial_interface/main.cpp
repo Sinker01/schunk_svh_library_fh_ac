@@ -11,8 +11,6 @@
 
 using namespace std;
 
-constexpr auto ONE_SEC = 1000ms;
-
 void sleep(std::chrono::milliseconds time = 2000ms)
 {
   this_thread::sleep_for(time);
@@ -56,60 +54,40 @@ void mainPosition()
   sleep(1000ms);
 }
 
-size_t anz;
-
-void sleepAndGetData(const int finger, ostream& outfile)
+void sleepAndGetData(const int finger, vector<ostream*>& outfile)
 {
-  for(int i = 0; i < 300; i++) {
+  auto current_time = 0;
+  for(int i = 0; i < 1000; i++) {
     this_thread::sleep_for(10ms);
-    outfile << to_string(anz) + ";" + to_string(getmA(finger)) + ";" + to_string(getPosition(finger)) + "\n";
-    anz++;
+    string out = to_string(current_time) + ";" 
+    + to_string(getmA(finger)) + ";" 
+    + to_string(getPosition(finger)) + ";" 
+    + to_string(getNewton(finger)) + "\n";
+    for(auto &f: outfile) *f << out;
   }
 }
 
-void testNewton() {
-  int finger = 6;
+void getData()
+{
+  int finger = 5;
   initFiveFingerManager();
-  ofstream file("out.csv");
-  //auto &file = cout;
-  cout << "start\n\n";
-  setPositionTarget(finger, 0);
-  sleep(100ms);
-
-  cout << "time[µs];mA;position;Newton" << endl;
-  for(int i = 0; i < 10; i++) {
-    setMaxNewton(finger, (10-i) * 0.5);
+  cout << "start";
+  setSpeed(finger, 0.2);
+  ofstream outfile{"outof" + to_string(finger)};
+  vector<ostream*> out {&cout, &outfile};
+  outfile << "time[µs];mA;position" << endl;
+  for(unsigned i = 0; i < 10; i++)
+  {
+    setMaxmA(finger, (10 - i) * 36);
     setPositionTarget(finger, 1);
-    sleepAndGetData(3, file);
+    sleepAndGetData(finger, out);
     setPositionTarget(finger, 0);
-    sleepAndGetData(3, file);
-  }
-}
-
-void testmA() {
-  int finger = 6;
-  initFiveFingerManager();
-  //ofstream file("out.csv");
-  auto &file = cout;
-  cout << "start\n\n";
-  setPositionTarget(finger, 0);
-  sleep(100ms);
-
-  cout << "time[µs];mA;position;Newton" << endl;
-  for(int i = 0; i < 10; i++) {
-    setMaxmA(finger, (10-i)*36);
-    setPositionTarget(finger, 1);
-    sleepAndGetData(3, file);
-    setPositionTarget(finger, 0);
-    sleepAndGetData(3, file);
+    sleepAndGetData(finger, out);
   }
 }
 
 int main()
 {
-  anz = 0;
-  testmA();
-  //sleep(5000ms);
-  //testmA();
+  getData();
   return 0;
 }

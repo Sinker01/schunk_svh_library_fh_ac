@@ -8,7 +8,7 @@ matplotlib.use('TkAgg')
 
 # Read the CSV file without a header, and manually assign column names
 file_path = 'build/out.csv'
-column_names = ['time[µs]', 'mA', 'Newton', 'position']
+column_names = ['time[µs]', 'mA', 'position', 'Newton']
 
 try:
     df = pd.read_csv(file_path, delimiter=';', header=None, names=column_names)
