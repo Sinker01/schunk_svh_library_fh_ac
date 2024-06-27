@@ -81,7 +81,7 @@ const std::uint8_t SVH_GET_FIRMWARE_INFO  = 0x0C; //!< Request the firmware info
  * \brief The SerialPacket holds the (non generated) header and data of one message to the
  * SVH-Hardware
  */
-struct SVHSerialPacket
+struct DRIVER_SVH_IMPORT_EXPORT SVHSerialPacket
 {
   //! \brief Continuosly incremented counter per package
   //! \note Continuous counter is currently not used by this software, the hw will just copy the
@@ -111,13 +111,13 @@ struct SVHSerialPacket
 };
 
 //! overload stream operator to easily serialize raw packet data
-driver_svh::ArrayBuilder& operator<<(driver_svh::ArrayBuilder& ab, const SVHSerialPacket& data);
+driver_svh::ArrayBuilder& DRIVER_SVH_IMPORT_EXPORT operator<<(driver_svh::ArrayBuilder& ab, const SVHSerialPacket& data);
 
 //! overload stream operator to easily deserialize raw packet data
-driver_svh::ArrayBuilder& operator>>(driver_svh::ArrayBuilder& ab, SVHSerialPacket& data);
+driver_svh::ArrayBuilder& DRIVER_SVH_IMPORT_EXPORT operator>>(driver_svh::ArrayBuilder& ab, SVHSerialPacket& data);
 
 //! Output Stream operator for easy printing of packet data
-std::ostream& operator<<(std::ostream& o, const SVHSerialPacket& sp);
+std::ostream& DRIVER_SVH_IMPORT_EXPORT operator<<(std::ostream& o, const SVHSerialPacket& sp);
 
 } // namespace driver_svh
 #endif // SVHSERIALPACKET_H

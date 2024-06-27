@@ -15,7 +15,7 @@
 /**
  * Initialises the five finger manager. This method should be called first.
  */
-void initFiveFingerManager();
+void DRIVER_SVH_IMPORT_EXPORT initFiveFingerManager();
 
 /**
  * An method to set the position of a finger.
@@ -23,7 +23,7 @@ void initFiveFingerManager();
  * @param finger The finger which should be accessed
  * @param position The position between 0 and 1
  */
-char setPositionTarget(int finger, double position);
+char DRIVER_SVH_IMPORT_EXPORT setPositionTarget(int finger, double position);
 /**
  *  the speed to the finger
  *   Set 1 for the maximun speed. Otherwise, the speed will be determined by multiplying the maximun
@@ -31,10 +31,10 @@ char setPositionTarget(int finger, double position);
  * @param finger
  * @param speed
  */
-char setSpeed(int finger, double speed);
-char setMaxNewton(int finger, double newton);
-char setMaxmA(int finger, uint16_t mA);
+char DRIVER_SVH_IMPORT_EXPORT setSpeed(int finger, double speed);
+char DRIVER_SVH_IMPORT_EXPORT setMaxNewton(int finger, double newton);
+char DRIVER_SVH_IMPORT_EXPORT setMaxmA(int finger, uint16_t mA);
 
-int16_t getmA(int finger);
-double getNewton(int finger);
-double getPosition(int finger);
+int16_t DRIVER_SVH_IMPORT_EXPORT getmA(int finger);
+double DRIVER_SVH_IMPORT_EXPORT getNewton(int finger);
+double DRIVER_SVH_IMPORT_EXPORT getPosition(int finger);
