@@ -208,10 +208,17 @@ enable_testing()
 # --------------------------------------------------------------------------------
 # Export and install
 # --------------------------------------------------------------------------------
+
+# Install the svh_java library to /usr/lib/jni
+install(TARGETS svh_java
+    LIBRARY DESTINATION /usr/lib/jni
+    ARCHIVE DESTINATION /usr/lib/jni
+    RUNTIME DESTINATION /usr/lib/jni
+)
+
 install(TARGETS
     svh-library
     svh-serial
-    svh_java
     EXPORT schunk_svh_library_targets
     LIBRARY DESTINATION lib
     ARCHIVE DESTINATION lib
