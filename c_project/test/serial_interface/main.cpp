@@ -58,15 +58,11 @@ void mainPosition()
 
 size_t anz;
 
-void sleepAndGetData(const int finger, ostream& outfile, const size_t count = 500)
+void sleepAndGetData(const int finger, ostream& outfile)
 {
-  for(int i = 0; i < count; i++) {
+  for(int i = 0; i < 300; i++) {
     this_thread::sleep_for(10ms);
-    outfile << to_string(anz) + ";" + 
-    to_string(getmA(finger)) + ";" 
-    + to_string(getPosition(finger)) + ";" 
-    // + to_string(getNewton(finger))
-    + "\n";
+    outfile << to_string(anz) + ";" + to_string(getmA(finger)) + ";" + to_string(getPosition(finger)) + "\n";
     anz++;
   }
 }
