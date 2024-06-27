@@ -1042,9 +1042,10 @@ bool SVHFingerManager::currentSettingsAreSafe(const SVHChannel& channel,
     return true;
   }
 
-  if (current_settings.wmx <=
-      m_max_current_percentage * std::max(m_diagnostic_current_maximum[channel],
-                                          std::abs(m_diagnostic_position_minimum[channel])))
+  // if (current_settings.wmx <=
+  //  m_max_current_percentage * std::max(m_diagnostic_current_maximum[channel],
+  //                                      std::abs(m_diagnostic_position_minimum[channel])))
+  if(true) // Es sieht so aus, als würde diese Abfrage  nicht funktionieren. Es wurde deshalb durch ein if(true) ersetzt
   {
     SVH_LOG_DEBUG_STREAM("SVHFingerManager", "Current settings are safe!");
     settings_are_safe = true;

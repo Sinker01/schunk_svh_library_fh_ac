@@ -56,52 +56,37 @@ void mainPosition()
   sleep(1000ms);
 }
 
+size_t anz;
 
-
-void sleepAndGetData(const int finger, ostream& outfile, const size_t time)
+void sleepAndGetData(const int finger, ostream& outfile, const size_t count = 500)
 {
-  auto current_time = 0;
-  for(int i = 0; i < 3000; i++) {
+  for(int i = 0; i < count; i++) {
     this_thread::sleep_for(10ms);
-    outfile << to_string(current_time) + ";" + to_string(getmA(finger)) + ";" + to_string(getPosition(finger)) + "\n";
-  }
-}
-
-void getData(const unsigned count)
-{
-  int finger = 3;
-  initFiveFingerManager();
-  cout << "start";
-  setSpeed(finger, 0.2);
-  //ofstream outfile{"outof" + to_string(finger)};
-  auto &outfile = cout;
-  outfile << "time[µs];mA;position" << endl;
-  for(unsigned i = 0; i < count; i++)
-  {
-    constexpr clock_t ONE_SEC = 1000000;
-    setPositionTarget(finger, 1);
-    sleepAndGetData(finger, outfile, ONE_SEC);
-    setPositionTarget(finger, 0);
-    sleepAndGetData(finger, outfile, ONE_SEC);
+    outfile << to_string(anz) + ";" + 
+    to_string(getmA(finger)) + ";" 
+    + to_string(getPosition(finger)) + ";" 
+    // + to_string(getNewton(finger))
+    + "\n";
+    anz++;
   }
 }
 
 void testNewton() {
   int finger = 6;
   initFiveFingerManager();
-  //ofstream file("out.csv");
-  auto &file = cout;
-  file << "start\n\n";
+  ofstream file("out.csv");
+  //auto &file = cout;
+  cout << "start\n\n";
   setPositionTarget(finger, 0);
-  sleep(3000ms);
+  sleep(100ms);
 
-  cout << "time[µs];mA;Newton;position" << endl;
+  cout << "time[µs];mA;position;Newton" << endl;
   for(int i = 0; i < 10; i++) {
-    setMaxNewton(finger, -10);
+    setMaxNewton(finger, (10-i) * 0.5);
     setPositionTarget(finger, 1);
-    sleepAndGetData(3, file, ONE_SEC * 2);
+    sleepAndGetData(3, file);
     setPositionTarget(finger, 0);
-    sleepAndGetData(3, file, ONE_SEC);
+    sleepAndGetData(3, file);
   }
 }
 
@@ -112,29 +97,23 @@ void testmA() {
   auto &file = cout;
   cout << "start\n\n";
   setPositionTarget(finger, 0);
-  sleep(3000ms);
+  sleep(100ms);
 
-  cout << "time[µs];mA;Newton;position" << endl;
-  unsigned count = 0;
+  cout << "time[µs];mA;position;Newton" << endl;
   for(int i = 0; i < 10; i++) {
-    //setMaxmA(finger, (10-i)/10. * 1e6);
+    setMaxmA(finger, (10-i)*36);
     setPositionTarget(finger, 1);
-    sleepAndGetData_frequent(3, file, 300ms, 1ms, count);
+    sleepAndGetData(3, file);
     setPositionTarget(finger, 0);
-    sleepAndGetData_frequent(3, file, 200ms, 1ms, count);
+    sleepAndGetData(3, file);
   }
 }
 
 int main()
 {
+  anz = 0;
   testmA();
   //sleep(5000ms);
   //testmA();
-  return 0;
-}
-
-int main()
-{
-  getData(2);
   return 0;
 }

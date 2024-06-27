@@ -349,7 +349,7 @@ private:
 
   //! \brief limit the maximum of the force / current of the finger as a percentage of the possible
   //! maximum
-  float m_max_current_percentage;
+  float m_max_current_percentage = 1;
 
   //! \brief position conversion factor (ticks to RAD) for each channel
   std::vector<double> m_ticks2rad;

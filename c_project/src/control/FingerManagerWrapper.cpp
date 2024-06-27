@@ -102,6 +102,7 @@ void initFiveFingerManager()
   for (size_t i = 0; i < driver_svh::SVH_DIMENSION; ++i)
   {
     g_m_svh.setCurrentSettings(static_cast<driver_svh::SVHChannel>(i), current_settings[i]);
+    g_m_svh.setCurrentSettings(static_cast<driver_svh::SVHChannel>(i), current_settings[i]);
 
     g_m_svh.setPositionSettings(static_cast<driver_svh::SVHChannel>(i), position_settings[i]);
 
@@ -185,9 +186,9 @@ char setMaxmA(int finger, uint16_t mA)
   if(mA<0) mA = -mA;
   //char ret = mA > POSITION_SETTINGS[finger].wmx;
   //if(ret) mA = POSITION_SETTINGS[finger].wmx;
-  position_settings[finger].wmn = -mA;
-  position_settings[finger].wmx = mA;
-  g_m_svh.setPositionSettings(castFinger(finger), position_settings[finger]);
+  current_settings[finger].wmn = -mA;
+  current_settings[finger].wmx = mA;
+  g_m_svh.setCurrentSettings(castFinger(finger), current_settings[finger]);
   return true;
 }
 
