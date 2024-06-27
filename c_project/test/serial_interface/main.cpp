@@ -110,8 +110,8 @@ void testNewton() {
 void testmA() {
   int finger = 6;
   initFiveFingerManager();
-  ofstream file("out.csv");
-  //auto &file = cout;
+  //ofstream file("out.csv");
+  auto &file = cout;
   cout << "start\n\n";
   setPositionTarget(finger, 0);
   sleep(3000ms);
