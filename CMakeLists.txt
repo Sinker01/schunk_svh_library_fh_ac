@@ -2,6 +2,11 @@ cmake_minimum_required(VERSION 3.10)
 
 project(schunk_svh_library VERSION 1.0 DESCRIPTION "C++ driver library for the Schunk SVH")
 
+# Check if the target platform is Windows and define _SYSTEM_WIN32_
+if(WIN32)
+        add_definitions(-D_SYSTEM_WIN32_)
+endif()
+
 # CMake will automatically update this library's version in the
 # SVHVersionConfig.h include.
 configure_file(include/schunk_svh_library/VersionConfig.h.in SVHVersionConfig.h)
@@ -9,7 +14,7 @@ configure_file(include/schunk_svh_library/VersionConfig.h.in SVHVersionConfig.h)
 # We require this C++ standard
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
-
+include(C:/Users/David/.vcpkg-clion/vcpkg/scripts/buildsystems/vcpkg.cmake)
 # System dependencies
 find_package(Threads REQUIRED)
 find_package(Boost COMPONENTS unit_test_framework REQUIRED)
@@ -75,8 +80,8 @@ target_include_directories(svh-serial PUBLIC
 target_link_libraries(svh-serial PUBLIC
         )
 target_compile_definitions(svh-serial PUBLIC
-        -D_SYSTEM_LINUX_
-        -D_SYSTEM_POSIX_
+        -D_SYSTEM_WINDOWS_
+        -DDRIVER_SVH_EXPORT_SYMBOLS
         )
 if(THREADS_HAVE_PTHREAD_ARG)
   target_compile_options(svh-serial PUBLIC "-pthread")
@@ -96,7 +101,8 @@ add_executable(test_driver_svh
         test/driver_svh/MainTest.cpp
         test/driver_svh/ByteOrderConversionTest.cpp
         test/driver_svh/SVHDriverTest.cpp
-        )
+        test/serial_interface/main.cpp
+)
 target_include_directories(test_driver_svh PUBLIC
         ${PROJECT_SOURCE_DIR}/include
         )
@@ -105,8 +111,8 @@ target_link_libraries(test_driver_svh
         svh-library
         )
 target_compile_definitions(test_driver_svh PUBLIC
-        -D_SYSTEM_LINUX_
-        -D_SYSTEM_POSIX_
+        -D_SYSTEM_WINDOWS_
+
         -DBOOST_TEST_DYN_LINK
         )
 add_test(NAME test_driver_svh COMMAND test_driver_svh)
@@ -124,6 +130,8 @@ target_link_libraries(test_svh_send_packet
         svh-serial
         )
 add_test(NAME test_svh_send_packet COMMAND test_svh_send_packet)
+
+
 
 # --------------------------------------------------------------------------------
 

@@ -144,7 +144,7 @@ DRIVER_SVH_IMPORT_EXPORT size_t fromLittleEndian<double>(double& data,
 //! NOTE: As the arraybuilder converts the data during write and read operations
 //!       the raw data that is read out from the stream has to be appended without any conversion
 //!       (use appendWithoutConversion). (TODO: Is there a better Solution to this?)
-class ArrayBuilder
+class DRIVER_SVH_IMPORT_EXPORT ArrayBuilder
 {
 public:
   ArrayBuilder(size_t array_size = 1)

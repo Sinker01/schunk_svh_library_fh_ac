@@ -226,7 +226,12 @@ void SVHSerialInterface::receivedPacketCallback(const SVHSerialPacket& packet,
                                                 unsigned int packet_count)
 {
   m_last_index = packet.index;
-  m_received_packet_callback(packet, packet_count);
+  if (m_received_packet_callback) {
+    m_received_packet_callback(packet, packet_count);
+  } else {
+    std::cerr << "Error: m_received_packet_callback is not set!" << std::endl;
+    throw std::bad_function_call();
+  }
 }
 
 } // namespace driver_svh

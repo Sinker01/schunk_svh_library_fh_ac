@@ -197,7 +197,7 @@ void SerialFlags::GetDCB(LPDCB dcb) const
 
   dcb->ByteSize = m_data_bits;
   dcb->StopBits = stopbit_map[m_stop_bits];
-  dcb->fParity  = (m_parity != eP_NONE);
+  dcb->fParity  = (m_parity != P_NONE);
   dcb->Parity   = parity_map[m_parity];
   dcb->BaudRate = m_baud_rate;
 

@@ -62,7 +62,7 @@
   {                                                                                                \
     std::stringstream ss;                                                                          \
     ss << M;                                                                                       \
-    Logger::log(__FILE__, __LINE__, NAME, driver_svh::LogLevel::ERROR, ss.str());                  \
+    Logger::log(__FILE__, __LINE__, NAME, driver_svh::LogLevel::ERROR_LEVEL, ss.str());                  \
   } while (false)
 #define SVH_LOG_FATAL_STREAM(NAME, M)                                                              \
   do                                                                                               \

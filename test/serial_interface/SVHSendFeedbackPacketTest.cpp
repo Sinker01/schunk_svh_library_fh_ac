@@ -42,14 +42,25 @@ using namespace driver_svh;
 
 using driver_svh::serial::Serial;
 using driver_svh::serial::SerialFlags;
+void onReceivedPacket(const SVHSerialPacket& packet, unsigned int packet_count) {
+  std::cout << "Received packet with index: " << static_cast<int>(packet.index)
+            << ", address: " << static_cast<int>(packet.address)
+            << ", packet count: " << packet_count << std::endl;
 
+  std::cout << "Packet data: ";
+  for (auto byte : packet.data) {
+    std::cout << static_cast<int>(byte) << " ";
+  }
+  std::cout << std::endl;
+}
 // testing serial interface of svh driver
 int main(int argc, const char* argv[])
 {
-  std::string serial_device_name = "/dev/ttyUSB0";
+  std::string serial_device_name = "COM5";
 
-  SVHSerialInterface serial_com(NULL);
+  SVHSerialInterface serial_com(onReceivedPacket);
   serial_com.connect(serial_device_name);
+
 
   // build feedback serial packet for sending
   ArrayBuilder packet;

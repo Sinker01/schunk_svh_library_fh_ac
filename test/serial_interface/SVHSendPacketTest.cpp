@@ -43,7 +43,7 @@ using driver_svh::serial::SerialFlags;
 // testing serial interface of svh driver
 int main(int argc, const char* argv[])
 {
-  std::string serial_device_name = "/dev/ttyUSB0";
+  std::string serial_device_name = "COM5";
 
   SVHSerialInterface serial_com(NULL);
   serial_com.connect(serial_device_name);
