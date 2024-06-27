@@ -10,7 +10,7 @@ public class Main {
         //testSpeed();
         //mainPosition();
         //getData(5);
-        testNewton();
+        helloWorld();
         //helloWorld();
     }
 

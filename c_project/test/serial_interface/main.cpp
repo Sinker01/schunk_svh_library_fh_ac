@@ -54,20 +54,22 @@ void mainPosition()
   sleep(1000ms);
 }
 
+size_t anz = 0;
+
 void sleepAndGetData(const int finger, vector<ostream*>& outfile)
 {
-  auto current_time = 0;
   for(int i = 0; i < 1000; i++) {
     this_thread::sleep_for(10ms);
-    string out = to_string(current_time) + ";" 
+    string out = to_string(anz) + ";" 
     + to_string(getmA(finger)) + ";" 
     + to_string(getPosition(finger)) + ";" 
     + to_string(getNewton(finger)) + "\n";
     for(auto &f: outfile) *f << out;
+    anz++;
   }
 }
 
-void getData()
+void testmA()
 {
   int finger = 5;
   initFiveFingerManager();
@@ -88,6 +90,6 @@ void getData()
 
 int main()
 {
-  getData();
+  testmA();
   return 0;
 }
