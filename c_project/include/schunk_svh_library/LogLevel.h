@@ -39,7 +39,7 @@ enum class LogLevel
   DEBUG = 0,
   INFO,
   WARN,
-  ERROR,
+  ERROR_LEVEL,
   FATAL,
   NONE
 };
@@ -54,7 +54,7 @@ inline std::string logLevelToString(const LogLevel level)
       return "INFO";
     case LogLevel::WARN:
       return "WARN";
-    case LogLevel::ERROR:
+    case LogLevel::ERROR_LEVEL:
       return "ERROR";
     case LogLevel::FATAL:
       return "FATAL";

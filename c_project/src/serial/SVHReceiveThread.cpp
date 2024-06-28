@@ -39,6 +39,7 @@
 #include <schunk_svh_library/serial/SVHReceiveThread.h>
 #include <sstream>
 #include <thread>
+#include <utility>
 
 using driver_svh::ArrayBuilder;
 
@@ -48,7 +49,7 @@ SVHReceiveThread::SVHReceiveThread(const std::chrono::microseconds& idle_sleep,
                                    std::shared_ptr<Serial> device,
                                    ReceivedPacketCallback const& received_callback)
   : m_idle_sleep(idle_sleep)
-  , m_serial_device(device)
+  , m_serial_device(std::move(device))
   , m_received_state(RS_HEADE_R1)
   , m_length(0)
   , m_data(0, 0)

@@ -59,8 +59,9 @@
 #ifdef _SYSTEM_WIN32_
 #  include <math.h>
 #  include <stdio.h>
-#endif
 
+#endif
+#  include <cstring>
 #undef SERIAL_DUMP_DATA
 //#define SERIAL_DUMP_DATA
 
@@ -68,26 +69,24 @@ namespace driver_svh {
 namespace serial {
 
 Serial::Serial(const char* dev_name, const SerialFlags& flags)
-  : m_dev_name(strdup(dev_name))
+  : m_dev_name(_strdup(dev_name))
   , m_serial_flags(flags)
 {
 #ifdef _SYSTEM_WIN32_
   m_com = INVALID_HANDLE_VALUE;
 #else
-  m_file_descr = -1;
 #endif
 
   open();
 }
 
 Serial::Serial(const char* dev_name, SerialFlags::BaudRate baud_rate, const SerialFlags& flags)
-  : m_dev_name(strdup(dev_name))
+  : m_dev_name(_strdup(dev_name))
   , m_serial_flags(flags)
 {
 #ifdef _SYSTEM_WIN32_
   m_com = INVALID_HANDLE_VALUE;
 #else
-  m_file_descr = -1;
 #endif
 
   m_serial_flags.setBaudRate(baud_rate);
@@ -192,8 +191,8 @@ bool Serial::open()
     m_status = GetLastError();
     SVH_LOG_WARN_STREAM("Serial",
                         "Serial(" << m_dev_name << "): ERROR>> open port failed ("
-                                  << StatusText().c_str() << ").");
-    // WARNINGMSG("Serial(%s): ERROR>> open port failed (%s).\n", m_dev_name, StatusText().c_str());
+                                  << statusText().c_str() << ").");
+    // WARNINGMSG("Serial(%s): ERROR>> open port failed (%s).\n", m_dev_name, statusText().c_str());
   }
 
   // Set the receive and send buffer size.
@@ -204,9 +203,9 @@ bool Serial::open()
       m_status = GetLastError();
       SVH_LOG_WARN_STREAM("Serial",
                           "Serial(" << m_dev_name << "): ERROR>> SetupComm failed ("
-                                    << StatusText().c_str() << ").");
+                                    << statusText().c_str() << ").");
       // WARNINGMSG("Serial(%s): ERROR>> SetupComm failed (%s).\n", m_dev_name,
-      // StatusText().c_str());
+      // statusText().c_str());
     }
   }
 
@@ -220,9 +219,9 @@ bool Serial::open()
       m_status = GetLastError();
       SVH_LOG_WARN_STREAM("Serial",
                           "Serial(" << m_dev_name << "): ERROR>> GetCommState failed ("
-                                    << StatusText().c_str() << ").");
+                                    << statusText().c_str() << ").");
       // WARNINGMSG("Serial(%s): ERROR>> GetCommState failed (%s).\n", m_dev_name,
-      // StatusText().c_str());
+      // statusText().c_str());
     }
   }
 
@@ -235,9 +234,9 @@ bool Serial::open()
       m_status = GetLastError();
       SVH_LOG_WARN_STREAM("Serial",
                           "Serial(" << m_dev_name << "): ERROR>> SetCommState failed ("
-                                    << StatusText().c_str() << ").");
+                                    << statusText().c_str() << ").");
       // WARNINGMSG("Serial(%s): ERROR>> SetCommState failed (%s).\n", m_dev_name,
-      // StatusText().c_str());
+      // statusText().c_str());
       return false;
     }
   }
@@ -328,8 +327,8 @@ int Serial::changeBaudrate(SerialFlags::BaudRate speed)
     m_status = GetLastError();
     SVH_LOG_WARN_STREAM("Serial",
                         "Serial(" << m_dev_name << "): ERROR>> PurgeComm failed ("
-                                  << StatusText().c_str() << ").");
-    // WARNINGMSG("Serial(%s): ERROR>> PurgeComm failed (%s).\n", m_dev_name, StatusText().c_str());
+                                  << statusText().c_str() << ").");
+    // WARNINGMSG("Serial(%s): ERROR>> PurgeComm failed (%s).\n", m_dev_name, statusText().c_str());
   }
 
   // Get the current serial port configuration.
@@ -342,9 +341,9 @@ int Serial::changeBaudrate(SerialFlags::BaudRate speed)
       m_status = GetLastError();
       SVH_LOG_WARN_STREAM("Serial",
                           "Serial(" << m_dev_name << "): ERROR>> GetCommState failed ("
-                                    << StatusText().c_str() << ").");
+                                    << statusText().c_str() << ").");
       // WARNINGMSG("Serial(%s): ERROR>> GetCommState failed (%s).\n", m_dev_name,
-      // StatusText().c_str());
+      // statusText().c_str());
     }
   }
 
@@ -357,9 +356,9 @@ int Serial::changeBaudrate(SerialFlags::BaudRate speed)
       m_status = GetLastError();
       SVH_LOG_WARN_STREAM("Serial",
                           "Serial(" << m_dev_name << "): ERROR>> SetCommState failed ("
-                                    << StatusText().c_str() << ").");
+                                    << statusText().c_str() << ").");
       // WARNINGMSG("Serial(%s): ERROR>> SetCommState failed (%s).\n", m_dev_name,
-      // StatusText().c_str());
+      // statusText().c_str());
     }
   }
 
@@ -382,8 +381,8 @@ int Serial::clearReceiveBuffer()
     m_status = GetLastError();
     SVH_LOG_WARN_STREAM("Serial",
                         "Serial(" << m_dev_name << "): ERROR>> PurgeComm failed ("
-                                  << StatusText().c_str() << ").");
-    // WARNINGMSG("Serial(%s): ERROR>> PurgeComm failed (%s).\n", m_dev_name, StatusText().c_str());
+                                  << statusText().c_str() << ").");
+    // WARNINGMSG("Serial(%s): ERROR>> PurgeComm failed (%s).\n", m_dev_name, statusText().c_str());
   }
 
   return m_status;
@@ -415,8 +414,8 @@ int Serial::clearSendBuffer()
     m_status = GetLastError();
     SVH_LOG_WARN_STREAM("Serial",
                         "Serial(" << m_dev_name << "): ERROR>> PurgeComm failed ("
-                                  << StatusText().c_str() << ").");
-    // WARNINGMSG("Serial(%s): ERROR>> PurgeComm failed (%s).\n", m_dev_name, StatusText().c_str());
+                                  << statusText().c_str() << ").");
+    // WARNINGMSG("Serial(%s): ERROR>> PurgeComm failed (%s).\n", m_dev_name, statusText().c_str());
   }
 
   return m_status;
@@ -471,9 +470,9 @@ ssize_t Serial::write(const void* data, ssize_t size)
     m_status = GetLastError();
     SVH_LOG_WARN_STREAM("Serial",
                         "Serial(" << m_dev_name << "): ERROR>> could not write data ("
-                                  << StatusText().c_str() << ").");
+                                  << statusText().c_str() << ").");
     // WARNINGMSG("Serial(%s): ERROR>> could not write data (%s).\n", m_dev_name,
-    // StatusText().c_str());
+    // statusText().c_str());
   }
   else
   {
@@ -638,9 +637,9 @@ ssize_t Serial::read(void* data, ssize_t size, unsigned long time, bool return_o
     m_status = GetLastError();
     SVH_LOG_WARN_STREAM("Serial",
                         "Serial(" << m_dev_name << "): ERROR>> setting read timeout failed ("
-                                  << StatusText().c_str() << ")");
+                                  << statusText().c_str() << ")");
     // WARNINGMSG("Serial(%s): ERROR>> setting read timeout failed (%s).\n", m_dev_name,
-    // StatusText().c_str());
+    // statusText().c_str());
   }
 
   // Try to receive data.
@@ -648,7 +647,7 @@ ssize_t Serial::read(void* data, ssize_t size, unsigned long time, bool return_o
   {
     DWORD bytes_received   = 0;
     size_t bytes_remaining = (m_read_buffer_fill < size ? size - m_read_buffer_fill : 0);
-    auto now std::chrono::high_resolution_clock::now();
+    auto now = std::chrono::high_resolution_clock::now();
     do
     {
       if (ReadFile(
@@ -672,9 +671,9 @@ ssize_t Serial::read(void* data, ssize_t size, unsigned long time, bool return_o
           m_status = error;
           SVH_LOG_WARN_STREAM("Serial",
                               "Serial(" << m_dev_name << "): ERROR>> error during read ("
-                                        << StatusText().c_str() << ")");
+                                        << statusText().c_str() << ")");
           // WARNINGMSG("Serial(%s): ERROR>> error during read (%s).\n", m_dev_name,
-          // StatusText().c_str());
+          // statusText().c_str());
         }
       }
       now = std::chrono::high_resolution_clock::now();
@@ -685,9 +684,9 @@ ssize_t Serial::read(void* data, ssize_t size, unsigned long time, bool return_o
       m_status = ERROR_TIMEOUT;
       SVH_LOG_WARN_STREAM("Serial",
                           "Serial(" << m_dev_name << "): ERROR>> error during read ("
-                                    << StatusText().c_str() << ")");
+                                    << statusText().c_str() << ")");
       // WARNINGMSG("Serial(%s): ERROR>> error during read (%s).\n", m_dev_name,
-      // StatusText().c_str());
+      // statusText().c_str());
     }
   }
 

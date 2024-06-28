@@ -41,8 +41,8 @@ BOOST_AUTO_TEST_CASE(ConvertTest)
 {
   float test_float     = 15.08;
   int test_int         = 1508;
-  u_int8_t test_uint   = 128;
-  u_int16_t test_uint2 = 128;
+  uint8_t test_uint   = 128;
+  uint16_t test_uint2 = 128;
   ArrayBuilder ab;
   ab << test_int << test_float << test_uint << test_uint2;
 
@@ -52,8 +52,8 @@ BOOST_AUTO_TEST_CASE(ConvertTest)
 
   float test_float_out     = 0.0;
   int test_int_out         = 0;
-  u_int8_t test_uint_out   = 0;
-  u_int16_t test_uint2_out = 2;
+  uint8_t test_uint_out   = 0;
+  uint16_t test_uint2_out = 2;
   int test_to_mouch        = 0;
 
   ab >> test_int_out >> test_float_out >> test_uint_out >> test_uint2_out >> test_to_mouch;
@@ -74,10 +74,10 @@ BOOST_AUTO_TEST_CASE(ConvertTest)
 BOOST_AUTO_TEST_CASE(ConvertVectorsTest)
 {
   ArrayBuilder ab;
-  std::vector<u_int8_t> test_uint8_vector;
-  std::vector<u_int16_t> test_uint16_vector;
-  std::vector<u_int8_t> test_uint8_vector_out(4, 0);
-  std::vector<u_int16_t> test_uint16_vector_out(4, 0);
+  std::vector<uint8_t> test_uint8_vector;
+  std::vector<uint16_t> test_uint16_vector;
+  std::vector<uint8_t> test_uint8_vector_out(4, 0);
+  std::vector<uint16_t> test_uint16_vector_out(4, 0);
 
   // Test if the Vectors Work with the ArrayBuilder
   test_uint8_vector.push_back(1);
@@ -104,7 +104,7 @@ BOOST_AUTO_TEST_CASE(ConvertVectorsTest)
 
 
   //  std::cout << "Test_uint_16_vector was reconstructed with the elements: ";
-  //  for (std::vector<u_int16_t>::const_iterator it = test_uint16_vector_out.begin() ; it !=
+  //  for (std::vector<uint16_t>::const_iterator it = test_uint16_vector_out.begin() ; it !=
   //  test_uint16_vector_out.end(); ++it)
   //  {
   //    std::cout << (int)*it << ", ";
@@ -112,7 +112,7 @@ BOOST_AUTO_TEST_CASE(ConvertVectorsTest)
   //  std::cout << std::endl;
 
   //  std::cout << "Test_uint_8_vector was reconstructed with the elements: ";
-  //  for (std::vector<u_int8_t>::const_iterator it = test_uint8_vector_out.begin() ; it !=
+  //  for (std::vector<uint8_t>::const_iterator it = test_uint8_vector_out.begin() ; it !=
   //  test_uint8_vector_out.end(); ++it)
   //  {
   //    std::cout << (int)*it << ", ";
@@ -134,12 +134,12 @@ BOOST_AUTO_TEST_CASE(ReadBackTest)
 {
   ArrayBuilder ab;
 
-  u_int32_t size      = 12;
-  u_int32_t size_peek = 0;
-  u_int32_t size_out  = 0;
+  uint32_t size      = 12;
+  uint32_t size_peek = 0;
+  uint32_t size_out  = 0;
 
   ab << size;
-  size_peek = ab.readBack<u_int32_t>();
+  size_peek = ab.readBack<uint32_t>();
   ab >> size_out;
 
   // std::cout << "Size: "<<(int)size << " Size_peek "<< size_peek << " size_out" << size_out <<
@@ -152,7 +152,7 @@ BOOST_AUTO_TEST_CASE(ReadBackTest)
   // This should return zero as the read pointer is empty.,However,readback should still function as
   // the last element written is still there
   BOOST_CHECK_EQUAL(size_out, 0);
-  size_peek = ab.readBack<u_int32_t>();
+  size_peek = ab.readBack<uint32_t>();
   BOOST_CHECK_EQUAL(size, size_peek);
 }
 

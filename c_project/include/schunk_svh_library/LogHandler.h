@@ -32,6 +32,9 @@
 
 #include <string>
 
+#include "schunk_svh_library/ImportExport.h"
+
+
 #include <schunk_svh_library/LogLevel.h>
 
 namespace driver_svh {
@@ -49,7 +52,7 @@ public:
                    const std::string& msg) = 0;
 };
 
-class ShellLogHandler : public LogHandler
+class DRIVER_SVH_IMPORT_EXPORT ShellLogHandler : public LogHandler
 {
 public:
   ShellLogHandler()                   = default;

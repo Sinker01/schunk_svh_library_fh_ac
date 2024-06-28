@@ -41,6 +41,9 @@
 #    define DRIVER_SVH_IMPORT_EXPORT __declspec(dllimport)
 #  endif
 
+#include "schunk_svh_library/ImportExport.h"
+
+
 #elif defined(__GNUC__) && (__GNUC__ > 3) && !defined(_IC_STATIC_)
 
 #  define DRIVER_SVH_IMPORT_EXPORT __attribute__((visibility("default")))

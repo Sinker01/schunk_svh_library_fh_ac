@@ -39,7 +39,7 @@ using namespace driver_svh;
 // testing serial interface of svh driver
 int main(int argc, const char* argv[])
 {
-  std::string serial_device_name = "/dev/ttyUSB0";
+  std::string serial_device_name = "COM5";
 
   SVHController controller;
   controller.connect(serial_device_name);

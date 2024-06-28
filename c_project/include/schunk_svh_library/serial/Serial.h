@@ -45,7 +45,7 @@
 
 #ifdef _SYSTEM_WIN32_
 typedef unsigned int speed_t;
-typedef int ssize_t;
+typedef int ssizeT;
 #endif
 
 #ifdef _SYSTEM_POSIX_
@@ -192,6 +192,7 @@ private:
   HANDLE m_com;
   unsigned char m_read_buffer[0x4000];
   ssize_t m_read_buffer_fill;
+
 #endif
 
 #ifdef _SYSTEM_POSIX_
