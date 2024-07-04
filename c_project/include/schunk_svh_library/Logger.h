@@ -109,6 +109,7 @@ public:
   {
     Logger& logger = getInstance();
     if (level >= logger.m_log_level)
+    //if(true)
     {
       logger.m_log_handler->log(file, line, name, level, msg);
     }

@@ -12,10 +12,12 @@
 
 #define CHANNELS 9
 
+constexpr auto PORT = "COM3";
+
 /**
  * Initialises the five finger manager. This method should be called first.
  */
-void DRIVER_SVH_IMPORT_EXPORT initFiveFingerManager();
+void DRIVER_SVH_IMPORT_EXPORT initFiveFingerManager(const char* const port = PORT);
 
 /**
  * An method to set the position of a finger.

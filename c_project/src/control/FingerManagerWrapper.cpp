@@ -82,14 +82,14 @@ constexpr double MAX_RANGE_RAD[9] {
 SVHPositionSettings position_settings[9];
 SVHCurrentSettings current_settings[9];
 
-void initFiveFingerManager()
+void initFiveFingerManager(const char* const port)
 {
   for(int i = 0; i < CHANNELS; i++)
   {
     position_settings[i] = POSITION_SETTINGS[i];
     current_settings[i] = CURRENT_SETTINGS[i];
   }
-  if (!g_m_svh.connect())
+  if (!g_m_svh.connect(port))
   {
     cout << "test";
     throw "Could not be connected";

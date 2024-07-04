@@ -9,6 +9,11 @@
 
 #include "schunk_svh_library/FingerManagerWrapper.h"
 
+#include "schunk_svh_library/Logger.h"
+#include "schunk_svh_library/LogLevel.h"
+
+#include <memory>
+
 using namespace std;
 
 void sleep(std::chrono::milliseconds time = 2000ms)
@@ -90,6 +95,8 @@ void testmA()
 
 int main()
 {
+  auto debugLevel = driver_svh::LogLevel::DEBUG;
+  driver_svh::Logger::setLogLevel(debugLevel);
   testmA();
   return 0;
 }
