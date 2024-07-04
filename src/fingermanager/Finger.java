@@ -45,15 +45,15 @@ public enum Finger {
     }
 
     //Dieser code lädt die in /build liegende Dateien
-    static {
-        File lib = new File("build/" + System.mapLibraryName("svh_java")); //Pfad in den cmake_build_debug Ordner, wo nach dem kompilieren die .so Dateien liegen
+    /*static {
+        File lib = new File("build/" + System.mapLibraryName("libsvh_java")); //Pfad in den cmake_build_debug Ordner, wo nach dem kompilieren die .so Dateien liegen
         System.out.println("FINGER LIB PATH: " + lib.getAbsolutePath());
         System.load(lib.getAbsolutePath());
         initFiveFingerManager();
-    }
+    }*/
 
     //Dieser Code lädt die im System gespeicherten Variablen
-    /*static {
+    static {
         // Get the current value of java.library.path
         String libraryPath = System.getProperty("java.library.path");
 
@@ -61,10 +61,10 @@ public enum Finger {
         System.out.println("java.library.path: " + libraryPath);
 
         
-        System.loadLibrary("svh_java");
+        System.loadLibrary("libsvh_java");
         System.out.println("svh_java library loaded.");
         //initFiveFingerManager();
-    }*/
+    }
 
     public static native void initFiveFingerManager();
 

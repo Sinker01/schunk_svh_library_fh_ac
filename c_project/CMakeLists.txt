@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 
+# set(JAVA_VERSION 22)
+
 # Set the vcpkg target triplet
 if(NOT DEFINED VCPKG_TARGET_TRIPLET)
     if(CMAKE_SIZEOF_VOID_P EQUAL 8)
@@ -136,25 +138,37 @@ endif()
 # --------------------------------------------------------------------------------
 # JNI library
 # --------------------------------------------------------------------------------
-if(NOT WIN32)
-    add_library(svh_java SHARED
-            src/control/Finger.cpp
-    )
 
-    target_include_directories(svh_java PUBLIC
-            /usr/lib/jvm/java-11-openjdk-amd64/include
-            /usr/lib/jvm/java-11-openjdk-amd64/include/linux
-            $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
-            $<INSTALL_INTERFACE:include>
-    )
+add_library(svh_java SHARED
+        src/control/Finger.cpp
+)
 
-    set_target_properties(svh_java PROPERTIES OUTPUT_NAME "svh_java")
+if(WIN32)
+    set(JAVA_PATH "C:\\Program Files\\Java\\jdk-22")
+else()
+    set(JAVA_PATH /usr/lib/jvm/java-11-openjdk-amd64)
+endif ()
 
-    target_link_libraries(svh_java PUBLIC
-            svh-library
-            svh-serial
-    )
-endif()
+set(JNI_DIRECTORY
+        ${JAVA_PATH}/include
+        ${JAVA_PATH}/include/win32
+        ${JAVA_PATH}/include/linux
+)
+
+message(JNI-directory=${JNI_DIRECTORY})
+
+target_include_directories(svh_java PUBLIC
+    ${JNI_DIRECTORY}
+    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>
+)
+
+set_target_properties(svh_java PROPERTIES OUTPUT_NAME "svh_java")
+
+target_link_libraries(svh_java PUBLIC
+        svh-library
+        svh-serial
+)
 
 # --------------------------------------------------------------------------------
 # Tests
@@ -265,21 +279,23 @@ enable_testing()
 # --------------------------------------------------------------------------------
 
 # Install the svh_java library to /usr/lib/jni
-if(NOT WIN32)
-    install(TARGETS svh_java
-            LIBRARY DESTINATION /usr/lib/jni
-            ARCHIVE DESTINATION /usr/lib/jni
-            RUNTIME DESTINATION /usr/lib/jni
-    )
-endif()
+
+#if(NOT WIN32)
+#    install(TARGETS svh_java
+#            LIBRARY DESTINATION /usr/lib/jni
+#            ARCHIVE DESTINATION /usr/lib/jni
+#            RUNTIME DESTINATION /usr/lib/jni
+#    )
+#endif()
 
 install(TARGETS
         svh-library
         svh-serial
+        svh_java
         EXPORT schunk_svh_library_targets
-        LIBRARY DESTINATION lib
-        ARCHIVE DESTINATION lib
-        RUNTIME DESTINATION bin
+        LIBRARY DESTINATION ${JAVA_PATH}/lib
+        ARCHIVE DESTINATION ${JAVA_PATH}/lib
+        RUNTIME DESTINATION ${JAVA_PATH}/bin
         INCLUDES DESTINATION include
 )
 
