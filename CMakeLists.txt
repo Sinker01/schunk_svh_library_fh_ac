@@ -4,11 +4,7 @@ cmake_minimum_required(VERSION 3.10)
 
 # Set the vcpkg target triplet
 if(NOT DEFINED VCPKG_TARGET_TRIPLET)
-    if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-        set(VCPKG_TARGET_TRIPLET "x64-windows-mingw-dynamic" CACHE STRING "Vcpkg target triplet")
-    else()
-        set(VCPKG_TARGET_TRIPLET "x86-windows" CACHE STRING "Vcpkg target triplet")
-    endif()
+set(VCPKG_TARGET_TRIPLET "x64-mingw-dynamic")
 endif()
 
 # Specify the target architecture
