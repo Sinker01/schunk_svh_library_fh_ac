@@ -36,8 +36,8 @@ configure_file(include/schunk_svh_library/VersionConfig.h.in SVHVersionConfig.h)
 
 # Include JNI directories (if applicable for your build environment)
 if(NOT WIN32)
-    include_directories(/usr/lib/jvm/java-11-openjdk-amd64/include)
-    include_directories(/usr/lib/jvm/java-11-openjdk-amd64/include/linux)
+    include_directories(/usr/lib/jvm/java-21-openjdk-amd64/include)
+    include_directories(/usr/lib/jvm/java-21-openjdk-amd64/include/linux)
 endif()
 
 # We require this C++ standard
@@ -148,7 +148,7 @@ add_library(svh_java SHARED
 if(WIN32)
     set(JAVA_PATH "C:\\Program Files\\Java\\jdk-22")
 else()
-    set(JAVA_PATH /usr/lib/jvm/java-11-openjdk-amd64)
+    set(JAVA_PATH /usr/lib/jvm/java-21-openjdk-amd64)
 endif ()
 
 set(JNI_DIRECTORY
