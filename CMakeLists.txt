@@ -301,18 +301,21 @@ enable_testing()
 #            RUNTIME DESTINATION /usr/lib/jni
 #    )
 #endif()
-
+if(WIN32)
+set(INSTALL_PATH "${JAVA_PATH}")
+else()
+set(INSTALL_PATH "/usr/java/packages")
+endif()
 install(TARGETS
         svh-library
         svh-serial
         svh_java
         EXPORT schunk_svh_library_targets
-        LIBRARY DESTINATION ${JAVA_PATH}/lib
-        ARCHIVE DESTINATION ${JAVA_PATH}/lib
-        RUNTIME DESTINATION ${JAVA_PATH}/bin
+        LIBRARY DESTINATION ${INSTALL_PATH}/lib
+        ARCHIVE DESTINATION ${INSTALL_PATHATH}/lib
+        RUNTIME DESTINATION ${INSTALL_PATH}/bin
         INCLUDES DESTINATION include
 )
-
 # Create and install a file with all exported targets
 install(EXPORT schunk_svh_library_targets
         DESTINATION lib/cmake/schunk_svh_library
