@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.10)
 # Set the vcpkg target triplet
 if(NOT DEFINED VCPKG_TARGET_TRIPLET)
     if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-        set(VCPKG_TARGET_TRIPLET "x64-windows" CACHE STRING "Vcpkg target triplet")
+        set(VCPKG_TARGET_TRIPLET "x64-windows-mingw-dynamic" CACHE STRING "Vcpkg target triplet")
     else()
         set(VCPKG_TARGET_TRIPLET "x86-windows" CACHE STRING "Vcpkg target triplet")
     endif()
@@ -17,6 +17,12 @@ if(NOT CMAKE_SYSTEM_PROCESSOR)
         set(CMAKE_SYSTEM_PROCESSOR "x86_64")
     endif()
 endif()
+
+if(WIN32)
+    set(CMAKE_TOOLCHAIN_FILE "C:/local/vcpkg/scripts/buildsystems/vcpkg.cmake")
+endif()
+
+set(MAKE_BUILD_TYPE "Debug")
 
 if (DEFINED CMAKE_TOOLCHAIN_FILE)
     include(${CMAKE_TOOLCHAIN_FILE})
