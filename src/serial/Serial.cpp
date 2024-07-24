@@ -51,6 +51,7 @@
 #  include <stdio.h>
 #  include <string.h>
 #  include <sys/time.h>
+#define STRDUP(str) strdup(str)
 #endif
 
 #include <chrono>
@@ -59,6 +60,7 @@
 #ifdef _SYSTEM_WIN32_
 #  include <math.h>
 #  include <stdio.h>
+#define STRUP(str) _strdup(str)
 
 #endif
 #  include <cstring>
@@ -69,7 +71,7 @@ namespace driver_svh {
 namespace serial {
 
 Serial::Serial(const char* dev_name, const SerialFlags& flags)
-  : m_dev_name(_strdup(dev_name))
+  : m_dev_name(STRDUP(dev_name))
   , m_serial_flags(flags)
 {
 #ifdef _SYSTEM_WIN32_
@@ -81,7 +83,7 @@ Serial::Serial(const char* dev_name, const SerialFlags& flags)
 }
 
 Serial::Serial(const char* dev_name, SerialFlags::BaudRate baud_rate, const SerialFlags& flags)
-  : m_dev_name(_strdup(dev_name))
+  : m_dev_name(STRDUP(dev_name))
   , m_serial_flags(flags)
 {
 #ifdef _SYSTEM_WIN32_

@@ -1,3 +1,4 @@
+winget install Oracle.JDK.22
 
 mkdir C:\local
 Set-Location C:\local

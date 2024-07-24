@@ -12,7 +12,14 @@
 
 #define CHANNELS 9
 
-constexpr auto PORT = "COM3";
+constexpr auto PORT = 
+#ifdef _SYSTEM_WIN32_
+"COM3"
+#else
+"/dev/ttyUSB0"
+#endif
+;
+
 
 /**
  * Initialises the five finger manager. This method should be called first.
