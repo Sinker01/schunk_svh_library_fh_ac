@@ -25,6 +25,10 @@ JNIEXPORT jbyte JNICALL Java_fingermanager_Finger_setMaxNewton(JNIEnv *env, jcla
   return setMaxNewton(finger, newton);
 }
 
+JNIEXPORT jbyte JNICALL Java_fingermanager_Finger_setMaxmA(JNIEnv *env, jclass cls, jint finger, jdouble mA) {
+  return setMaxmA(finger, mA);
+}
+
 JNIEXPORT jdouble JNICALL Java_fingermanager_Finger_getNewton(JNIEnv *env, jclass cls, jint finger) {
   return getNewton(finger);
 }
