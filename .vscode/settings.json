@@ -1,8 +1,8 @@
 {
-    "cmake.generator": "Visual Studio 17 2022",
+    "cmake.generator": "MinGW Makefiles",
     "cmake.preferredGenerators": [
         {
-            "name": "Visual Studio 17 2022",
+            "name": "MinGW Makefiles",
             "platform": "x64"
         }
     ]
