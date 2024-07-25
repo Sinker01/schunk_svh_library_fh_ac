@@ -5,13 +5,13 @@ cmake_policy(SET CMP0167 OLD)
 
 # Set the vcpkg target triplet
 if(NOT DEFINED VCPKG_TARGET_TRIPLET)
-set(VCPKG_TARGET_TRIPLET "x64-mingw-dynamic")
+    set(VCPKG_TARGET_TRIPLET "x64-mingw-dynamic")
 endif()
 
 # Specify the target architecture
 if(NOT CMAKE_SYSTEM_PROCESSOR)
     if(WIN32)
-        set(CMAKE_SYSTEM_PROCESSOR "x86_64")
+        set(CMAKE_SYSTEM_PROCESSOR "x64")
     endif()
 endif()
 
@@ -20,6 +20,10 @@ if(WIN32)
 endif()
 
 set(MAKE_BUILD_TYPE "Debug")
+
+if(NOT BOOST_ROOT)
+    set(BOOST_ROOT "C:/local/vcpkg/installed/x64-windows")
+endif()
 
 if (DEFINED CMAKE_TOOLCHAIN_FILE)
     include(${CMAKE_TOOLCHAIN_FILE})
