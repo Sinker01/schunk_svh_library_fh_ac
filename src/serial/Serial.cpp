@@ -60,7 +60,7 @@
 #ifdef _SYSTEM_WIN32_
 #  include <math.h>
 #  include <stdio.h>
-#define STRUP(str) _strdup(str)
+#define STRDUP(str) _strdup(str)
 
 #endif
 #  include <cstring>
