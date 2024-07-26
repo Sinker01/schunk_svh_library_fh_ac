@@ -1,9 +1,0 @@
-{
-    "cmake.preferredGenerators": [
-        {
-            "name": "MinGW Makefiles",
-            "platform": "x64",
-            "condition": "os == 'Windows_NT'"
-        }
-    ]
-}
