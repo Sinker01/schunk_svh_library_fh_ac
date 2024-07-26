@@ -299,28 +299,22 @@ enable_testing()
 # Export and install
 # --------------------------------------------------------------------------------
 
-# Install the svh_java library to /usr/lib/jni
 
-#if(NOT WIN32)
-#    install(TARGETS svh_java
-#            LIBRARY DESTINATION /usr/lib/jni
-#            ARCHIVE DESTINATION /usr/lib/jni
-#            RUNTIME DESTINATION /usr/lib/jni
-#    )
-#endif()
 if(WIN32)
-set(INSTALL_PATH "${JAVA_PATH}")
+set(INSTALL_PATH_LIB "${JAVA_PATH}/lib")
+set(INSTALL_PATH_BIN "${JAVA_PATH}/bin")
 else()
-set(INSTALL_PATH "/usr/java/packages")
+set(INSTALL_PATH_LIB "/usr/lib/x86_64-linux-gnu")
+set(INSTALL_PATH_BIN "/usr/lib/x86_64-linux-gnu/jni")
 endif()
 install(TARGETS
         svh-library
         svh-serial
         svh_java
         EXPORT schunk_svh_library_targets
-        LIBRARY DESTINATION ${INSTALL_PATH}/lib
-        ARCHIVE DESTINATION ${INSTALL_PATHATH}/lib
-        RUNTIME DESTINATION ${INSTALL_PATH}/bin
+        LIBRARY DESTINATION ${INSTALL_PATH_LIB}
+        ARCHIVE DESTINATION ${INSTALL_PATH_LIB}
+        RUNTIME DESTINATION ${INSTALL_PATH_BIN}
         INCLUDES DESTINATION include
 )
 # Create and install a file with all exported targets
