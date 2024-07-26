@@ -1,5 +1,4 @@
 #include <jni.h>
-#include <iostream>
 #include "schunk_svh_library/fingermanager_Finger.h"
 #include "schunk_svh_library/FingerManagerWrapper.h"
 
@@ -14,7 +13,7 @@ JNIEXPORT void JNICALL Java_fingermanager_Finger_initFiveFingerManager(JNIEnv *e
 }
 
 JNIEXPORT void JNICALL Java_fingermanager_Finger_initFiveFingerManagerWindows(JNIEnv *env, jclass cls, jstring path) {
-  const char* str = env->GetStringUTFChars( path, NULL );
+  const char* str = env->GetStringUTFChars( path, nullptr);
   initFiveFingerManager(str);
 }
 
