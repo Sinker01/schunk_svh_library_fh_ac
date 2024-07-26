@@ -47,7 +47,38 @@ If you want to run the program and need access to a USB drive, attach it to WSL.
 ## Installing the Schunk SVH Driver on Windows
 
 ### Step 1: Install MSYS2 and MinGW
-Follow the instructions on the [MSYS2](https://www.msys2.org/) website to install MSYS2 and MinGW.
+Follow the instructions on the [MSYS2](https://www.msys2.org/) website to install MSYS2 and MinGW, and add it to the PATH environment variable.
+You can also run the script below as administrator.
+```powershell
+# Download the archive
+curl -sLo msys2.exe https://github.com/msys2/msys2-installer/releases/download/nightly-x86_64/msys2-base-x86_64-latest.sfx.exe
+.\msys2.exe -y -oC:\  # Extract to C:\msys64
+Remove-Item msys2.exe  # Delete the archive again
+
+C:\msys64\usr\bin\bash -lc 'pacman -S --needed base-devel mingw-w64-ucrt-x86_64-toolchain --noconfirm'
+
+# Define the path to be added
+$newPath = "C:\msys64\ucrt64\bin"
+
+# Get the current system PATH environment variable
+$systemPath = [System.Environment]::GetEnvironmentVariable("Path", [System.EnvironmentVariableTarget]::Machine)
+
+# Split the PATH variable into an array of paths
+$pathArray = $systemPath -split ';'
+
+# Check if the new path is already in the PATH variable
+if ($pathArray -notcontains $newPath) {
+    # If not, append the new path to the PATH variable
+    $newSystemPath = $systemPath + ";" + $newPath
+    
+    # Set the new PATH variable
+    [System.Environment]::SetEnvironmentVariable("Path", $newSystemPath, [System.EnvironmentVariableTarget]::Machine)
+    
+    Write-Output "The path '$newPath' has been added to the system PATH."
+} else {
+    Write-Output "The path '$newPath' is already in the system PATH."
+}
+```
 
 ### Step 2: Install Necessary Tools
 Open PowerShell as an Administrator and run the following commands:
@@ -60,8 +91,9 @@ Create a directory for Boost, download, and extract it:
 ```powershell
 mkdir C:\local
 cd C:\local
-curl -O https://archives.boost.io/release/1.82.0/source/boost_1_85_0.7z
+curl -LO https://archives.boost.io/release/1.85.0/source/boost_1_85_0.7z
 cmd.exe /c "C:\Program Files\7-Zip\7z.exe" x boost_1_85_0.7z
+rm boost_1_85_0.7z
 cd boost_1_85_0
 .\bootstrap.bat mingw
 .\b2 toolset=gcc address-model=64 --with-test
