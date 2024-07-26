@@ -13,6 +13,11 @@ JNIEXPORT void JNICALL Java_fingermanager_Finger_initFiveFingerManager(JNIEnv *e
   initFiveFingerManager();
 }
 
+JNIEXPORT void JNICALL Java_fingermanager_Finger_initFiveFingerManagerWindows(JNIEnv *env, jclass cls, jstring path) {
+  const char* str = env->GetStringUTFChars( path, NULL );
+  initFiveFingerManager(str);
+}
+
 JNIEXPORT jbyte JNICALL Java_fingermanager_Finger_setPositionTarget(JNIEnv *env, jclass cls, jint finger, jdouble position) {
   return setPositionTarget(finger, position);
 }

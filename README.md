@@ -110,7 +110,7 @@ Open a new terminal as Administrator, navigate to the project directory, and run
 ```powershell
 mkdir build
 cd build 
-cmake -G "MinGW Makefiles" ..
+cmake -G "Ninja" ..
 cmake --build .
 cmake --install .
 ```

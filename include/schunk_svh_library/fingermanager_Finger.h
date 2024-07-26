@@ -7,61 +7,77 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-/*
+  /*
  * Class:     fingermanager_Finger
  * Method:    initFiveFingerManager
  * Signature: ()V
- */
-JNIEXPORT void JNICALL Java_fingermanager_Finger_initFiveFingerManager
-  (JNIEnv *, jclass);
+   */
+  JNIEXPORT void JNICALL Java_fingermanager_Finger_initFiveFingerManager
+    (JNIEnv *, jclass);
 
-/*
+  /*
+ * Class:     fingermanager_Finger
+ * Method:    initFiveFingerManagerWindows
+ * Signature: (Ljava/lang/String;)V
+   */
+  JNIEXPORT void JNICALL Java_fingermanager_Finger_initFiveFingerManagerWindows
+    (JNIEnv *, jclass, jstring);
+
+  /*
  * Class:     fingermanager_Finger
  * Method:    setPositionTarget
  * Signature: (ID)B
- */
-JNIEXPORT jbyte JNICALL Java_fingermanager_Finger_setPositionTarget
-  (JNIEnv *, jclass, jint, jdouble);
+   */
+  JNIEXPORT jbyte JNICALL Java_fingermanager_Finger_setPositionTarget
+    (JNIEnv *, jclass, jint, jdouble);
 
-/*
+  /*
  * Class:     fingermanager_Finger
  * Method:    setSpeed
  * Signature: (ID)B
- */
-JNIEXPORT jbyte JNICALL Java_fingermanager_Finger_setSpeed
-  (JNIEnv *, jclass, jint, jdouble);
+   */
+  JNIEXPORT jbyte JNICALL Java_fingermanager_Finger_setSpeed
+    (JNIEnv *, jclass, jint, jdouble);
 
-/*
+  /*
  * Class:     fingermanager_Finger
  * Method:    setMaxNewton
  * Signature: (ID)B
- */
-JNIEXPORT jbyte JNICALL Java_fingermanager_Finger_setMaxNewton
-  (JNIEnv *, jclass, jint, jdouble);
+   */
+  JNIEXPORT jbyte JNICALL Java_fingermanager_Finger_setMaxNewton
+    (JNIEnv *, jclass, jint, jdouble);
 
-/*
+  /*
+ * Class:     fingermanager_Finger
+ * Method:    setMaxmA
+ * Signature: (ID)B
+   */
+  JNIEXPORT jbyte JNICALL Java_fingermanager_Finger_setMaxmA
+    (JNIEnv *, jclass, jint, jdouble);
+
+  /*
  * Class:     fingermanager_Finger
  * Method:    getmA
  * Signature: (I)S
- */
-JNIEXPORT jshort JNICALL Java_fingermanager_Finger_getmA
-  (JNIEnv *, jclass, jint);
+   */
+  JNIEXPORT jshort JNICALL Java_fingermanager_Finger_getmA
+    (JNIEnv *, jclass, jint);
 
-/*
+  /*
  * Class:     fingermanager_Finger
  * Method:    getNewton
  * Signature: (I)D
- */
-JNIEXPORT jdouble JNICALL Java_fingermanager_Finger_getNewton
-  (JNIEnv *, jclass, jint);
+   */
+  JNIEXPORT jdouble JNICALL Java_fingermanager_Finger_getNewton
+    (JNIEnv *, jclass, jint);
 
-/*
+  /*
  * Class:     fingermanager_Finger
  * Method:    getPosition
  * Signature: (I)D
- */
-JNIEXPORT jdouble JNICALL Java_fingermanager_Finger_getPosition
-  (JNIEnv *, jclass, jint);
+   */
+  JNIEXPORT jdouble JNICALL Java_fingermanager_Finger_getPosition
+    (JNIEnv *, jclass, jint);
 
 #ifdef __cplusplus
 }
