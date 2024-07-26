@@ -1,9 +1,14 @@
 cmake_minimum_required(VERSION 3.30)
 cmake_policy(SET CMP0167 NEW)
 
-# set(JAVA_VERSION 22)
+#Disable this on windows when boost is not correct installed
+set(TEST 1)
 
-set(TEST FALSE)
+if(NOT WIN32)
+set(TEST 1)
+endif()
+
+
 
 # Set the vcpkg target triplet
 if(NOT DEFINED VCPKG_TARGET_TRIPLET)
@@ -18,15 +23,17 @@ if(NOT CMAKE_SYSTEM_PROCESSOR)
 endif()
 
 if(WIN32)
+
+        if(NOT BOOST_ROOT)
+                set(BOOST_ROOT "C:/local/boost_1_85_0")
+        endif()
     #set(CMAKE_TOOLCHAIN_FILE "C:/local/vcpkg/scripts/buildsystems/vcpkg.cmake")
-    set(CMAKE_PREFIX_PATH "C:/local/boost_1_85_0/stage/lib/cmake/Boost-1.85.0")
+    if(NOT DEFINED CMAKE_PREFIX_PATH)
+        set(CMAKE_PREFIX_PATH "${BOOST_ROOT}/stage/lib/cmake/Boost-1.85.0")
+    endif()
 endif()
 
 set(MAKE_BUILD_TYPE "Debug")
-
-if(NOT BOOST_ROOT)
-    set(BOOST_ROOT "C:/local/boost_1_85_0")
-endif()
 
 if (DEFINED CMAKE_TOOLCHAIN_FILE)
     include(${CMAKE_TOOLCHAIN_FILE})
@@ -54,7 +61,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # System dependencies
 find_package(Threads REQUIRED)
-if(TEST TRUE)
+if(DEFINED TEST)
 find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 endif()
 
@@ -186,7 +193,7 @@ target_link_libraries(svh_java PUBLIC
 # Tests
 # --------------------------------------------------------------------------------
 
-if(TEST TRUE)
+if(DEFINED TEST)
 add_executable(test_driver_svh
         test/driver_svh/MainTest.cpp
         test/driver_svh/ByteOrderConversionTest.cpp
