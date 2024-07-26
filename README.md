@@ -78,7 +78,7 @@ Open a new terminal as Administrator, navigate to the project directory, and run
 ```powershell
 mkdir build
 cd build 
-cmake ..
+cmake -G "MinGW Makefiles" ..
 cmake --build .
 cmake --install .
 ```
