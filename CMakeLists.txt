@@ -280,7 +280,7 @@ endif()
 # --------------------------------------------------------------------------------
 
 add_executable(my_test
-        test/serial_interface/main.cpp
+        src/main.cpp
 )
 target_include_directories(my_test PUBLIC
         include

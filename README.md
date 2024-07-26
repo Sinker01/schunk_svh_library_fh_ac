@@ -114,3 +114,7 @@ cmake -G "MinGW Makefiles" ..
 cmake --build .
 cmake --install .
 ```
+
+## Test the environment
+
+If you want to test the environment, you can write your own tests to [src/main.cpp](src/main.cpp) into the main() method, or use or look at our tests there.

@@ -2,9 +2,9 @@
 // Created by sven on 24.05.24.
 //
 
+#include "schunk_svh_library/control/SVHController.h"
 #include "schunk_svh_library/control/SVHFingerManager.h"
 #include <fstream>
-#include <schunk_svh_library/control/SVHController.h>
 #include <thread>
 
 #include "schunk_svh_library/FingerManagerWrapper.h"
