@@ -122,6 +122,8 @@ void initFiveFingerManager(const char* const port)
   }
 
   //reset all fingers. This will take a while...
+  for(int i = 0; i < CHANNELS; i++) g_positions[i] = MAX_RANGE_RAD[i];
+  g_m_svh.setAllTargetPositions(g_positions);
   auto m_initialized = g_m_svh.resetChannel(driver_svh::SVHChannel::SVH_ALL);
   if (!m_initialized)
   {
@@ -129,7 +131,6 @@ void initFiveFingerManager(const char* const port)
   }
 
   //Apply the minimal finger spread
-  for(int i = 0; i < CHANNELS; i++) g_positions[i] = MAX_RANGE_RAD[i];
   g_m_svh.setAllTargetPositions(g_positions);
 }
 
