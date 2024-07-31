@@ -41,7 +41,17 @@ sudo cmake --install .
 
 ### Step 5: Attach USB Drive to WSL (Optional)
 If you want to run the program and need access to a USB drive, attach it to WSL.
+#### 1. Get the bus id of your USB drive
 ```powershell
+usbipd list
+```
+#### 2. Attach it to wsl
+```powershell
+usbipd attach --wsl --busid <busid>
+```
+e.g.:
+```powershell
+usbipd attach --wsl --busid 1-1
 ```
 
 ## Installing the Schunk SVH Driver on Windows
