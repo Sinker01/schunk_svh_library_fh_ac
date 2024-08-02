@@ -25,7 +25,7 @@ sudo apt install git build-essential gdb libboost-test-dev openjdk-21-jdk -y
 ### Step 3: Clone the Schunk SVH Driver Project
 Clone the repository and navigate into the project directory:
 ```sh
-git clone https://github.com/Sinker01/schunk_svh_library_windows
+git clone [https://github.com/Sinker01/schunk_svh_library_windows](https://github.com/Sinker01/schunk_svh_library_fh_ac)
 cd schunk_svh_library_windows
 ```
 
@@ -112,7 +112,7 @@ cd boost_1_85_0
 ### Step 4: Clone the Schunk SVH Driver Project
 Navigate to your chosen directory and clone the project:
 ```powershell
-git clone https://github.com/Sinker01/schunk_svh_library_windows
+git clone [https://github.com/Sinker01/schunk_svh_library_windows](https://github.com/Sinker01/schunk_svh_library_fh_ac)
 ```
 
 Step 5: Build and Install the Driver
